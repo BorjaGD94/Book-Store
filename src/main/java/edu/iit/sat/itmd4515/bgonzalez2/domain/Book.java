@@ -5,8 +5,9 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.domain;
 
+import java.util.Date;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.PastOrPresent;
 
 /**
  *
@@ -16,20 +17,22 @@ public class Book {
     
     @NotBlank
     private String title;
+    @NotBlank
     private String author;
+    @NotBlank
     private String genre;
-    @PositiveOrZero
-    private int numberOfCopies;
+    @PastOrPresent
+    private Date yearPublished;
 
-  
+ 
     public Book() {
     }
 
-    public Book(String title, String author, String genre, int numberOfCopies) {
+    public Book(String title, String author, String genre, Date yearPublished) {
         this.title = title;
         this.author = author;
         this.genre = genre;
-        this.numberOfCopies = numberOfCopies;
+        this.yearPublished = yearPublished;
     }
     
 
@@ -88,10 +91,28 @@ public class Book {
     public void setTitle(String title) {
         this.title = title;
     }
+    
+        /**
+     * Get the value of yearPublished
+     *
+     * @return the value of yearPublished
+     */
+    public Date getYearPublished() {
+        return yearPublished;
+    }
+
+    /**
+     * Set the value of yearPublished
+     *
+     * @param yearPublished new value of yearPublished
+     */
+    public void setYearPublished(Date yearPublished) {
+        this.yearPublished = yearPublished;
+    }
 
     @Override
     public String toString() {
-        return "Book{" + "title=" + title + ", author=" + author + ", genre=" + genre + '}';
+        return "Book{" + "title=" + title + ", author=" + author + ", genre=" + genre + ", yearPublished=" + yearPublished + '}';
     }
 
 }
