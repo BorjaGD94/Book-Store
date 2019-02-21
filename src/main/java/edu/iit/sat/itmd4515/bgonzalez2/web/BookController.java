@@ -147,7 +147,11 @@ public class BookController extends HttpServlet {
                     
                     ps.executeUpdate();
                 }
-                c.close();
+                try {
+                    c.close();
+                }catch(Exception exc){
+                    LOG.log(Level.SEVERE, null, exc);
+                }
 
             } catch (SQLException ex) {
                 LOG.log(Level.SEVERE, null, ex);
