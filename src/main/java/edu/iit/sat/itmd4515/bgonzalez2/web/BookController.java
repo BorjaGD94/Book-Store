@@ -95,7 +95,8 @@ public class BookController extends HttpServlet {
             }
         }
 
-        Book book = new Book(titleParam, authorParam, genreParam, formmatedDate);
+        //Book book = new Book(titleParam, authorParam, genreParam, formmatedDate);
+        Book book = new Book(titleParam, authorParam, genreParam, null);
         LOG.info(book.toString());
 
         Set<ConstraintViolation<Book>> constraintViolations = validator.validate(book);

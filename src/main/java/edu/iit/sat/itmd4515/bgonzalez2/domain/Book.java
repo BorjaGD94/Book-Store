@@ -5,7 +5,13 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 
@@ -13,27 +19,47 @@ import javax.validation.constraints.PastOrPresent;
  *
  * @author Borja
  */
+
+@Entity
+@NamedQuery(name = "Book.findByTitle", query = "select b from Book b where b.title = :title")
 public class Book {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     @NotBlank
+    @Column(nullable = false, unique = true)
     private String title;
     @NotBlank
+    @Column(nullable = false)
     private String author;
     @NotBlank
+    @Column(nullable = false)
     private String genre;
     @PastOrPresent
-    private Date yearPublished;
+    private LocalDate yearPublished;
 
  
     public Book() {
     }
 
-    public Book(String title, String author, String genre, Date yearPublished) {
+    public Book(String title, String author, String genre, LocalDate yearPublished) {
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.yearPublished = yearPublished;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    
     
 
     /**
@@ -97,7 +123,7 @@ public class Book {
      *
      * @return the value of yearPublished
      */
-    public Date getYearPublished() {
+    public LocalDate getYearPublished() {
         return yearPublished;
     }
 
@@ -106,13 +132,13 @@ public class Book {
      *
      * @param yearPublished new value of yearPublished
      */
-    public void setYearPublished(Date yearPublished) {
+    public void setYearPublished(LocalDate  yearPublished) {
         this.yearPublished = yearPublished;
     }
 
     @Override
     public String toString() {
-        return "Book{" + "title=" + title + ", author=" + author + ", genre=" + genre + ", yearPublished=" + yearPublished + '}';
+        return "Book{" + "id=" + id + ", title=" + title + ", author=" + author + ", genre=" + genre + ", yearPublished=" + yearPublished + '}';
     }
 
 }
