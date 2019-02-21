@@ -59,7 +59,11 @@ public class BookController extends HttpServlet {
         Book book = new Book();
         request.setAttribute("book", book);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bookform.jsp");
-        dispatcher.forward(request, response);
+        try {
+            dispatcher.forward(request, response);
+        } catch (Exception ex) {
+            LOG.log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -80,7 +84,6 @@ public class BookController extends HttpServlet {
         String authorParam = request.getParameter("bookAuthor");
         String genreParam = request.getParameter("bookGenre");
         String dateParam = request.getParameter("bookYearPublished");
-        //LOG.info("STRING DATE: " + dateParam);
         Date formmatedDate = null;
 
         LOG.info("Received bookTitle=" + titleParam + " authorParam=" + authorParam + " genreParam=" + genreParam + " bookYearPublished=" + dateParam);
@@ -91,11 +94,14 @@ public class BookController extends HttpServlet {
                 formmatedDate = format.parse(dateParam);
             } catch (ParseException ex) {
                 LOG.log(Level.SEVERE, null, ex);
-                response.sendRedirect("/bogonzalez2-fp/error.jsp");
+                try {
+                    response.sendRedirect("/bogonzalez2-fp/error.jsp");
+                } catch (Exception ex1) {
+                    LOG.log(Level.SEVERE, null, ex1);
+                }
             }
         }
 
-        //Book book = new Book(titleParam, authorParam, genreParam, formmatedDate);
         Book book = new Book(titleParam, authorParam, genreParam, null);
         LOG.info(book.toString());
 
@@ -112,15 +118,22 @@ public class BookController extends HttpServlet {
             request.setAttribute("mistakes", constraintViolations);
             request.setAttribute("book", book);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bookform.jsp");
-            dispatcher.forward(request, response);
+            try {
+                dispatcher.forward(request, response);
+            } catch (Exception ex1) {
+                LOG.log(Level.SEVERE, null, ex1);
+            }
 
         } else {
             LOG.info("No problems here with user input. Proceed!");
 
             request.setAttribute("book", book);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bookok.jsp");
-            dispatcher.forward(request, response);
-            
+            try {
+                dispatcher.forward(request, response);
+            } catch (Exception ex1) {
+                LOG.log(Level.SEVERE, null, ex1);
+            }
 
             try (Connection c = ds.getConnection()) {
                 String Insert_SQL = "insert into book "
@@ -133,12 +146,16 @@ public class BookController extends HttpServlet {
                 ps.setString(4, dateParam);
 
                 ps.executeUpdate();
-                
+
                 c.close();
-                
+
             } catch (SQLException ex) {
                 LOG.log(Level.SEVERE, null, ex);
-                response.sendRedirect("/bogonzalez2-fp/error.jsp");
+                try {
+                    response.sendRedirect("/bogonzalez2-fp/error.jsp");
+                } catch (Exception ex1) {
+                    LOG.log(Level.SEVERE, null, ex1);
+                }
             }
         }
     }

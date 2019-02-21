@@ -64,7 +64,6 @@ public class BookTest extends AbstractJPATest {
         tx.begin();
         em.persist(book);
 
-        assertNotNull(book.getId());
         assertEquals(book.getTitle(), "Title to update");
 
         book.setTitle("Updated Title");
