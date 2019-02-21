@@ -139,14 +139,14 @@ public class BookController extends HttpServlet {
                 String Insert_SQL = "insert into book "
                         + "(title, author, genre, yearPublished)"
                         + " values (?,?,?,?)";
-                PreparedStatement ps = c.prepareStatement(Insert_SQL);
-                ps.setString(1, book.getTitle());
-                ps.setString(2, book.getAuthor());
-                ps.setString(3, book.getGenre());
-                ps.setString(4, dateParam);
-
-                ps.executeUpdate();
-
+                try (PreparedStatement ps = c.prepareStatement(Insert_SQL)) {
+                    ps.setString(1, book.getTitle());
+                    ps.setString(2, book.getAuthor());
+                    ps.setString(3, book.getGenre());
+                    ps.setString(4, dateParam);
+                    
+                    ps.executeUpdate();
+                }
                 c.close();
 
             } catch (SQLException ex) {
