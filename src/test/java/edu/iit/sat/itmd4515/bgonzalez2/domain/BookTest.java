@@ -35,8 +35,8 @@ public class BookTest extends AbstractJPATest {
         assertTrue("Title should match", "SEED".equals(seed.getTitle()));
     }
     
-    // Test a new removal by creating a new pet and then removing it
-    // Assert that you can no longer find it from the database
+    // Test a new removal by creating a new book and then removing it
+    // Assert that you can no longer find it in the database
     @Test
     public void testRemoveBook() {
         Book b = new Book("Title to Remove", "Author to Remove", "Genre to Remove", LocalDate.of(2010, 1, 7));
