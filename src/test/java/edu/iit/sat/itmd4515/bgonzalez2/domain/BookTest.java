@@ -46,12 +46,14 @@ public class BookTest extends AbstractJPATest {
         em.persist(b);
         tx.commit();
         
+        // After the commit the id should be present in the database
         assertNotNull("Book should be available in the database", b.getId());
         
         tx.begin();
         em.remove(b);
         tx.commit();
         
+        // After remove and commit there should be no trace of the book in the database
         Book removedBook = em.find(Book.class, b.getId());
         assertNull(removedBook);
     }
@@ -63,10 +65,14 @@ public class BookTest extends AbstractJPATest {
         // Persist the object
         tx.begin();
         em.persist(book);
-
+        
+        // Assert the the new book is what it is suppossed to be
         assertEquals(book.getTitle(), "Title to update");
-
+        
+        // Update the contents of the new book
         book.setTitle("Updated Title");
+        
+        // Assert the the updated book is what it is suppossed to be
         assertEquals(book.getTitle(), "Updated Title");
 
         tx.commit();
@@ -103,7 +109,7 @@ public class BookTest extends AbstractJPATest {
         assertNull("How about now? ID should be null after em.persist and before commit", b.getId());
         tx.commit();
         
-        assertNotNull("ID should be populated after commi");
+        assertNotNull("ID should be populated after commit");
         
         LOG.info(b.toString());
         assertTrue("ID should be greater than 0", b.getId() > 0l);
