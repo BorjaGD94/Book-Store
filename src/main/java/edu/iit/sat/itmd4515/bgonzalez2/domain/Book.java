@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 
@@ -19,18 +21,23 @@ import javax.validation.constraints.PastOrPresent;
  *
  * @author Borja
  */
-
 @Entity
 @NamedQuery(name = "Book.findByTitle", query = "select b from Book b where b.title = :title")
-public class Book {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Book extends AbstractIdentifiedEntity{
     
     @NotBlank
     @Column(nullable = false, unique = true)
-    private String title;
+    protected String title;
+
+    @OneToOne(mappedBy = "book")
+    private PurchaseHistory purchase;
+    
+    @ManyToOne
+    private Client client;
+    
+    @ManyToOne
+    private Retailer retailer;
+
     @NotBlank
     @Column(nullable = false)
     private String author;
@@ -40,7 +47,6 @@ public class Book {
     @PastOrPresent
     private LocalDate yearPublished;
 
- 
     public Book() {
     }
 
@@ -51,16 +57,13 @@ public class Book {
         this.yearPublished = yearPublished;
     }
 
-    public Long getId() {
-        return id;
+    public PurchaseHistory getPurchase() {
+        return purchase;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPurchase(PurchaseHistory purchase) {
+        this.purchase = purchase;
     }
-    
-    
-    
 
     /**
      * Get the value of genre
@@ -80,7 +83,6 @@ public class Book {
         this.genre = genre;
     }
 
-
     /**
      * Get the value of author
      *
@@ -99,26 +101,7 @@ public class Book {
         this.author = author;
     }
 
-
     /**
-     * Get the value of title
-     *
-     * @return the value of title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Set the value of title
-     *
-     * @param title new value of title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-        /**
      * Get the value of yearPublished
      *
      * @return the value of yearPublished
@@ -132,9 +115,36 @@ public class Book {
      *
      * @param yearPublished new value of yearPublished
      */
-    public void setYearPublished(LocalDate  yearPublished) {
+    public void setYearPublished(LocalDate yearPublished) {
         this.yearPublished = yearPublished;
     }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Retailer getRetailer() {
+        return retailer;
+    }
+
+    public void setRetailer(Retailer retailer) {
+        this.retailer = retailer;
+    }
+
+    
+    
 
     @Override
     public String toString() {

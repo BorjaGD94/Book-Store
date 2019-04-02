@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Set;
 import java.util.logging.Level;
@@ -37,7 +39,7 @@ public class BookController extends HttpServlet {
     @Resource
     Validator validator;
 
-    @Resource(lookup = "jdbc/itmd4515")
+    @Resource(lookup = "jdbc/itmd4515DS")
     DataSource ds;
 
     private static final Logger LOG = Logger.getLogger(BookController.class.getName());
@@ -78,89 +80,58 @@ public class BookController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        LOG.info("Inside the doPost method");
+        try {
+            LOG.info("Inside the doPost method");
 
-        String titleParam = request.getParameter("bookTitle");
-        String authorParam = request.getParameter("bookAuthor");
-        String genreParam = request.getParameter("bookGenre");
-        String dateParam = request.getParameter("bookYearPublished");
-        Date formmatedDate = null;
+            String titleParam = request.getParameter("bookTitle");
+            String authorParam = request.getParameter("bookAuthor");
+            String genreParam = request.getParameter("bookGenre");
+            String dateParam = request.getParameter("bookYearPublished");
+            LocalDate formattedDate = null;
 
-        LOG.info("Received bookTitle=" + titleParam + " authorParam=" + authorParam + " genreParam=" + genreParam + " bookYearPublished=" + dateParam);
+            LOG.info("Received bookTitle=" + titleParam + " authorParam=" + authorParam + " genreParam=" + genreParam + " bookYearPublished=" + dateParam);
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        if (dateParam != null && !(dateParam.isEmpty())) {
-            try {
-                formmatedDate = format.parse(dateParam);
-            } catch (ParseException ex) {
-                LOG.log(Level.SEVERE, null, ex);
+            if (dateParam != null && !(dateParam.isEmpty())) {
+                formattedDate = LocalDate.parse(dateParam);
+                LOG.info(formattedDate.toString());
+            }
+
+            Book book = new Book(titleParam, authorParam, genreParam, formattedDate);
+            LOG.info(book.toString());
+
+            Set<ConstraintViolation<Book>> constraintViolations = validator.validate(book);
+
+            if (constraintViolations.size() > 0) {
+                LOG.info("We know we have a problem. This failed validation");
+
+                for (ConstraintViolation<Book> bad : constraintViolations) {
+                    LOG.info(bad.getPropertyPath() + ": " + bad.getMessage());
+                }
+
+                request.setAttribute("formattedPublishedYear", book.getYearPublished().toString());
+                request.setAttribute("mistakes", constraintViolations);
+                request.setAttribute("book", book);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bookform.jsp");
                 try {
-                    response.sendRedirect("/bogonzalez2-fp/error.jsp");
+                    dispatcher.forward(request, response);
                 } catch (Exception ex1) {
                     LOG.log(Level.SEVERE, null, ex1);
                 }
-            }
-        }
 
-        Book book = new Book(titleParam, authorParam, genreParam, null);
-        LOG.info(book.toString());
+            } else {
+                LOG.info("No problems here with user input. Proceed!");
 
-        Set<ConstraintViolation<Book>> constraintViolations = validator.validate(book);
-
-        if (constraintViolations.size() > 0) {
-            LOG.info("We know we have a problem. This failed validation");
-
-            for (ConstraintViolation<Book> bad : constraintViolations) {
-                LOG.info(bad.getPropertyPath() + ": " + bad.getMessage());
-            }
-
-            request.setAttribute("formattedPublishedYear", format.format(book.getYearPublished()));
-            request.setAttribute("mistakes", constraintViolations);
-            request.setAttribute("book", book);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bookform.jsp");
-            try {
+                request.setAttribute("book", book);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bookok.jsp");
                 dispatcher.forward(request, response);
-            } catch (Exception ex1) {
-                LOG.log(Level.SEVERE, null, ex1);
-            }
 
-        } else {
-            LOG.info("No problems here with user input. Proceed!");
+                try (Connection c = ds.getConnection()) {
 
-            request.setAttribute("book", book);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/bookok.jsp");
-            try {
-                dispatcher.forward(request, response);
-            } catch (Exception ex1) {
-                LOG.log(Level.SEVERE, null, ex1);
-            }
-
-            try (Connection c = ds.getConnection()) {
-                String Insert_SQL = "insert into book "
-                        + "(title, author, genre, yearPublished)"
-                        + " values (?,?,?,?)";
-                try (PreparedStatement ps = c.prepareStatement(Insert_SQL)) {
-                    ps.setString(1, book.getTitle());
-                    ps.setString(2, book.getAuthor());
-                    ps.setString(3, book.getGenre());
-                    ps.setString(4, dateParam);
-                    
-                    ps.executeUpdate();
-                }
-                try {
-                    c.close();
-                }catch(Exception exc){
-                    LOG.log(Level.SEVERE, null, exc);
-                }
-
-            } catch (SQLException ex) {
-                LOG.log(Level.SEVERE, null, ex);
-                try {
-                    response.sendRedirect("/bogonzalez2-fp/error.jsp");
-                } catch (Exception ex1) {
-                    LOG.log(Level.SEVERE, null, ex1);
                 }
             }
+        } catch (IOException | SQLException | ServletException | DateTimeParseException e) {
+            LOG.log(Level.SEVERE, null, e);
+            response.sendRedirect("/bogonzalez2-fp/error.jsp");
         }
     }
 

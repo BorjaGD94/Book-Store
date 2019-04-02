@@ -33,6 +33,7 @@ public class BookTest extends AbstractJPATest {
                 .getSingleResult();
         
         assertTrue("Title should match", "SEED".equals(seed.getTitle()));
+        LOG.info(seed.toString());
     }
     
     // Test a new removal by creating a new book and then removing it
@@ -48,6 +49,7 @@ public class BookTest extends AbstractJPATest {
         
         // After the commit the id should be present in the database
         assertNotNull("Book should be available in the database", b.getId());
+        LOG.info(b.toString());
         
         tx.begin();
         em.remove(b);
@@ -68,12 +70,14 @@ public class BookTest extends AbstractJPATest {
         
         // Assert the the new book is what it is suppossed to be
         assertEquals(book.getTitle(), "Title to update");
+        LOG.info(book.toString());
         
         // Update the contents of the new book
         book.setTitle("Updated Title");
         
         // Assert the the updated book is what it is suppossed to be
         assertEquals(book.getTitle(), "Updated Title");
+        LOG.info(book.toString());
 
         tx.commit();
     }
@@ -94,6 +98,11 @@ public class BookTest extends AbstractJPATest {
         
         LOG.info(b.toString());
         assertTrue("ID should be greater than 0", b.getId() > 0l);
+        
+        //clean up test data
+        tx.begin();
+        em.remove(b);
+        tx.commit();
     }
     
     //expected failure scenario. My expected exception is too general in this case... would be better if it was something specific
@@ -113,5 +122,50 @@ public class BookTest extends AbstractJPATest {
         
         LOG.info(b.toString());
         assertTrue("ID should be greater than 0", b.getId() > 0l);
+    }
+    
+    @Test
+    public void testBookClientOneToManyBiDirectionalRelationship() {
+        Book b = new Book("Relationship Title", "New Relationship Author", "Genre", LocalDate.of(2010, 1, 7));
+
+        Client c = new Client("Francisco", "bgonzalez2","password");
+
+        // set the inverse side of the relationship and observe
+        //p.getOwners().add(o);
+        // result - by setting only the inverse side of the relationship, JoinTable was not updated
+        // set the owning side of the relationship and observe
+        b.setClient(c);
+        c.addBook(b);
+        //c.getBooks().add(b);
+
+        tx.begin();
+        em.persist(c);
+        em.persist(b);
+        tx.commit();
+
+        // find the owning side and illustrate
+        Client findClient = em.find(Client.class, 1l);
+        System.out.println("Owner name is: " + findClient.getName());
+        assertEquals(c.getName(), findClient.getName());
+        System.out.println("Owner books: " + findClient.getBooks().toString());
+        assertEquals(c.getBooks().get(0).getTitle(), findClient.getBooks().get(0).getTitle());
+
+        // find the inverse and illustrate
+        Book findBook = em.createNamedQuery("Book.findByTitle", Book.class)
+                .setParameter("title","Relationship Title")
+                .getSingleResult();
+        System.out.println("Book tittle is: " + findBook.getTitle());
+        assertEquals(b.getTitle(), findBook.getTitle());
+        System.out.println("Book owner: " + findBook.getClient().toString());
+        assertEquals(b.getClient().getName(), findBook.getClient().getName());
+        
+        // clean up test data
+        tx.begin();
+        c.removeBook(b);
+        em.remove(b);
+        tx.commit();
+        
+        findClient = em.find(Client.class, 1l);
+        assertTrue("Client books should be 0", findClient.getBooks().size() == 0);
     }
 }
