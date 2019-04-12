@@ -6,7 +6,6 @@
 package edu.iit.sat.itmd4515.bgonzalez2.domain;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.logging.Logger;
 import javax.persistence.RollbackException;
 import static org.junit.Assert.assertEquals;
@@ -19,9 +18,9 @@ import org.junit.Test;
  *
  * @author Borja
  */
-public class BookTest extends AbstractJPATest {
+public class BookJPATest extends AbstractJPATest {
 
-    private static final Logger LOG = Logger.getLogger(BookTest.class.getName());
+    private static final Logger LOG = Logger.getLogger(BookJPATest.class.getName());
     
     //testing my read operation.
     @Test
@@ -80,6 +79,11 @@ public class BookTest extends AbstractJPATest {
         LOG.info(book.toString());
 
         tx.commit();
+        
+        //clean up test data
+        tx.begin();
+        em.remove(book);
+        tx.commit();
     }
     
     @Test
@@ -128,7 +132,7 @@ public class BookTest extends AbstractJPATest {
     public void testBookClientOneToManyBiDirectionalRelationship() {
         Book b = new Book("Relationship Title", "New Relationship Author", "Genre", LocalDate.of(2010, 1, 7));
 
-        Client c = new Client("Francisco", "bgonzalez2","password");
+        Client c = new Client("Francisco");
 
         // set the inverse side of the relationship and observe
         //p.getOwners().add(o);

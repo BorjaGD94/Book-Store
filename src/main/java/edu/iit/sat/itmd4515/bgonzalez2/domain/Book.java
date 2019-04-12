@@ -8,9 +8,6 @@ package edu.iit.sat.itmd4515.bgonzalez2.domain;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -22,10 +19,11 @@ import javax.validation.constraints.PastOrPresent;
  * @author Borja
  */
 @Entity
+@NamedQuery(name = "Book.findAll", query = "select b from Book b")
 @NamedQuery(name = "Book.findByTitle", query = "select b from Book b where b.title = :title")
 public class Book extends AbstractIdentifiedEntity{
     
-    @NotBlank
+    @NotBlank(message = "This field can't be empty")
     @Column(nullable = false, unique = true)
     protected String title;
 
@@ -38,18 +36,26 @@ public class Book extends AbstractIdentifiedEntity{
     @ManyToOne
     private Retailer retailer;
 
-    @NotBlank
+    @NotBlank(message = "This field can't be empty")
     @Column(nullable = false)
     private String author;
-    @NotBlank
+    @NotBlank(message = "This field can't be empty")
     @Column(nullable = false)
     private String genre;
-    @PastOrPresent
+    @PastOrPresent(message = "Books can only have a publishing date in the past or the present, not in the future")
     private LocalDate yearPublished;
 
     public Book() {
     }
-
+    
+    /**
+     * Full args constructor for a Book
+     * 
+     * @param title
+     * @param author
+     * @param genre
+     * @param yearPublished 
+     */
     public Book(String title, String author, String genre, LocalDate yearPublished) {
         this.title = title;
         this.author = author;

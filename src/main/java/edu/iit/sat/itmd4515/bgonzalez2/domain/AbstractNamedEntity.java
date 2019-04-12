@@ -18,21 +18,15 @@ import javax.validation.constraints.NotBlank;
 @MappedSuperclass
 public abstract class AbstractNamedEntity extends AbstractIdentifiedEntity {
     
-    @NotBlank
+    @NotBlank(message = "Name is required")
     @Column(nullable = false, unique = true)
     protected String name;
     
-    protected String userName;
-    
-    protected String password;
-
     public AbstractNamedEntity() {
     }
 
-    public AbstractNamedEntity(String name, String userName, String password) {
+    public AbstractNamedEntity(String name) {
         this.name = name;
-        this.userName = userName;
-        this.password = password;
     }
 
     
@@ -54,24 +48,7 @@ public abstract class AbstractNamedEntity extends AbstractIdentifiedEntity {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
         
-
     @Override
     public int hashCode() {
         int hash = 5;

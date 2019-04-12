@@ -5,10 +5,19 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.domain;
 
+import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -16,23 +25,34 @@ import javax.persistence.OneToMany;
  */
 
 @Entity
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@NamedQuery(name = "Client.findAll", query = "select c from Client c")
+@NamedQuery(name = "Client.findByName", query = "select c from Client c where c.name = :name")
 public class Client extends AbstractNamedEntity {
     
     @OneToMany(mappedBy = "client")
+    @XmlTransient
+    @JsonbTransient
     private List<PurchaseHistory> purchases = new ArrayList<>();
     
     @OneToMany(mappedBy = "client")
+    @XmlTransient
+    @JsonbTransient 
     private List<Book> books = new ArrayList<>();
+    
+    @OneToOne
+    @JoinColumn(name = "USERNAME")
+    private User user;
     
     
     public Client() {
     }
     
-    public Client(String name, String userName, String password) {
-        super(name, userName, password);
+    public Client(String name) {
+        super(name);
     }
-    
-    
+      
     /**
      * addBook is a helper method to manage both sides of this bi-directional
      * OneToMany relationship
@@ -106,6 +126,14 @@ public class Client extends AbstractNamedEntity {
     @Override
     public String toString() {
         return "Client{" + "id=" + id + ", name=" + name + "}";
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
         
 }

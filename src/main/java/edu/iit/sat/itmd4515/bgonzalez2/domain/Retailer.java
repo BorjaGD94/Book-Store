@@ -5,10 +5,14 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.domain;
 
+import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -16,18 +20,41 @@ import javax.persistence.OneToMany;
  */
 
 @Entity
+@NamedQuery(name = "Retailer.findAll", query = "select r from Retailer r")
+@NamedQuery(name = "Retailer.findByName", query = "select r from Retailer r where r.name = :name")
 public class Retailer extends AbstractNamedEntity {
     
     @OneToMany(mappedBy = "retailer")
     private List<Book> books = new ArrayList<>();
+    
+    @OneToOne
+    @JoinColumn(name = "USERNAME")
+    private User user;
 
     public Retailer() {
     }
-    
-    public Retailer(String name, String userName, String password) {
-        super(name, userName, password);
+
+    /**
+     * Get the value of user
+     *
+     * @return the value of user
+     */
+    public User getUser() {
+        return user;
     }
+
+    /**
+     * Set the value of user
+     *
+     * @param user new value of user
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     
-    
+    public Retailer(String name) {
+        super(name);
+    } 
     
 }

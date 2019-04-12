@@ -6,14 +6,17 @@
     <class>edu.iit.sat.itmd4515.bgonzalez2.domain.Client</class>
     <class>edu.iit.sat.itmd4515.bgonzalez2.domain.PurchaseHistory</class>
     <class>edu.iit.sat.itmd4515.bgonzalez2.domain.Retailer</class>
+    <class>edu.iit.sat.itmd4515.bgonzalez2.domain.Administrator</class>
+    <class>edu.iit.sat.itmd4515.bgonzalez2.domain.security.Group</class>
+    <class>edu.iit.sat.itmd4515.bgonzalez2.domain.security.User</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-      
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/itmd4515?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="itmd4515"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="itmd4515"/>
+      <property name="javax.persistence.validation.mode" value="none"/>
     </properties>
   </persistence-unit>
 </persistence>

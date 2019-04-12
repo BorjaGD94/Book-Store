@@ -5,7 +5,10 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.domain;
 
+import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -14,12 +17,24 @@ import javax.persistence.Entity;
 
 @Entity
 public class Administrator extends AbstractNamedEntity {
+    
+    @OneToOne
+    @JoinColumn(name = "USERNAME")
+    private User user;
 
     public Administrator() {
     }
 
-    public Administrator(String name, String userName, String password) {
-        super(name, userName, password);
+    public Administrator(String name) {
+        super(name);
     }
-    
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+     
 }

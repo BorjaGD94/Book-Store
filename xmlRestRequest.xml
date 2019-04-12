@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client>
+    <name>Restful XML New Client</name>
+    <userName>RestUserName</userName>
+    <password>RestPassword</password>
+</client>

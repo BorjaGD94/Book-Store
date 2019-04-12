@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/portalTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+    <ui:define name="title">
+        Book Form
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Title" for="title"/>
+                <h:inputText class="form-control" id="title" value="#{bookController.book.title}" />
+                <h:message for="title" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Author" for="bookAuthor"/>
+                <h:inputText class="form-control" id="bookAuthor" value="#{bookController.book.author}" />
+                <h:message for="bookAuthor" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Genre" for="bookGenre"/>
+                <h:inputText class="form-control" id="bookGenre" value="#{bookController.book.genre}" />
+                <h:message for="bookGenre" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Publishing Date:" for="bookYearPublished"/>
+                <h:inputText class="form-control" p:type="date" id="bookYearPublished" value="#{bookController.book.yearPublished}">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+                </h:inputText>
+                <h:message for="bookYearPublished" errorClass="text-danger" />
+            </h:panelGroup> 
+            <h:commandButton value="Create New Book" class="btn btn-primary" action="#{bookController.executeSaveBook()}" />
+        </h:form>
+
+
+    </ui:define>
+
+</ui:composition>
