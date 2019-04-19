@@ -76,21 +76,27 @@ public class StartupSeedDatabase {
         userSvc.create(client2);
         
         
-        Client c1 = new Client("name1");
+        Client c1 = new Client("name1","lastName1","name1@iit.com");
         c1.setUser(client1);
-        Client c2 = new Client("name2");
+        Client c2 = new Client("name2","lastName2","name2@iit.com");
         c2.setUser(client2);
-        Retailer r1 = new Retailer("retName1");
+        Retailer r1 = new Retailer("retName1","lastRetName1","ret1@iit.com");
         r1.setUser(ret1);
-        Retailer r2 = new Retailer("retName2");
+        Retailer r2 = new Retailer("retName2","lastRetName2","ret2@iit.com");
         r2.setUser(ret2);
         
         
         Book b1 = new Book("EJBBook", "EJBAuthor", "EJBGenre", LocalDate.of(2010, 3, 12));
+        c1.addBook(b1);
         b1.setClient(c1);
+        r1.addBook(b1);
+        b1.setRetailer(r1);
         
         Book b2 = new Book("EJBBook1", "EJBAuthor1", "EJBGenre1", LocalDate.of(2007,11, 29));
+        c2.addBook(b2);
         b2.setClient(c2);
+        r2.addBook(b2);
+        b2.setRetailer(r2);
 
         bookSvc.create(b1);
         bookSvc.create(b2);

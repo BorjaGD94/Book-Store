@@ -132,7 +132,7 @@ public class BookJPATest extends AbstractJPATest {
     public void testBookClientOneToManyBiDirectionalRelationship() {
         Book b = new Book("Relationship Title", "New Relationship Author", "Genre", LocalDate.of(2010, 1, 7));
 
-        Client c = new Client("Francisco");
+        Client c = new Client("Francisco", "Gonzalez", "francisco@iit.com");
 
         // set the inverse side of the relationship and observe
         //p.getOwners().add(o);

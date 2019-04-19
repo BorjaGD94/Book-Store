@@ -28,8 +28,8 @@ public class ClientSOAP {
     }
     
     @WebMethod
-    public Client createNewClient(String name){
+    public Client createNewClient(String name, String lastName, String email){
         LOG.info("Inside createNewOwner SOAP Service with " + name);
-        return clientService.createClient(new Client(name));
+        return clientService.createClient(new Client(name, lastName, email));
     }
 }

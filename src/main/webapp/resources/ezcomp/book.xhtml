@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="book" required="true" type="edu.iit.sat.itmd4515.bgonzalez2.domain.Book" />
+        <cc:attribute name="readonly" required="false" default="true" type="java.lang.Boolean" />
+        <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION --> 
+    <cc:implementation>
+
+        <h2>
+            <h:outputText rendered="#{cc.attrs.readonly}" value="View Book"/>
+            <h:outputText rendered="#{not cc.attrs.readonly and empty cc.attrs.book.id}" value="Create New Book"/>
+            <h:outputText rendered="#{not cc.attrs.readonly and not empty cc.attrs.book.id}" value="Update Book"/>
+        </h2>
+
+        <h:form>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book ID #{cc.attrs.book.id}" for="petId" rendered="#{cc.attrs.readonly or not empty cc.attrs.book.id}" />
+                <h:inputHidden class="form-control" id="bookId" value="#{cc.attrs.book.id}"/>
+                <h:inputHidden class="form-control" id="bookVersion" value="#{cc.attrs.book.version}"/>
+                <h:message for="bookId" errorClass="text-danger"/>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Title" for="title"/>
+                <h:inputText 
+                    readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                    class="form-control" 
+                    id="title" 
+                    value="#{cc.attrs.book.title}" />
+                <h:message for="title" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Author" for="bookAuthor"/>
+                <h:inputText 
+                    readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                    disabled="#{cc.attrs.readonly ? 'true' : 'false'}"
+                    class="form-control" 
+                    id="bookAuthor" 
+                    value="#{cc.attrs.book.author}" />
+                <h:message for="bookAuthor" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Genre" for="bookGenre"/>
+                <h:inputText 
+                    readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                    disabled="#{cc.attrs.readonly ? 'true' : 'false'}"
+                    class="form-control" 
+                    id="bookGenre" 
+                    value="#{cc.attrs.book.genre}" />
+                <h:message for="bookGenre" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Book Publishing Date:" for="bookYearPublished"/>
+                <h:inputText 
+                    readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                    disabled="#{cc.attrs.readonly ? 'true' : 'false'}"
+                    class="form-control" 
+                    p:type="date" 
+                    id="bookYearPublished" 
+                    value="#{cc.attrs.book.yearPublished}">
+                    <f:convertDateTime type="localDate" pattern="yyyy-MM-dd" />
+                </h:inputText>
+                <h:message for="bookYearPublished" errorClass="text-danger" />
+            </h:panelGroup> 
+            
+            <ui:fragment rendered="#{not cc.attrs.readonly}">
+                <h:commandButton value="Save Book" class="btn btn-primary" action="#{cc.attrs.action}"/>
+            </ui:fragment>
+            
+        </h:form>
+
+    </cc:implementation>
+</html>

@@ -25,9 +25,10 @@ public class Administrator extends AbstractNamedEntity {
     public Administrator() {
     }
 
-    public Administrator(String name) {
-        super(name);
+    public Administrator(String name, String lastName, String email) {
+        super(name, lastName, email);
     }
+    
 
     public User getUser() {
         return user;

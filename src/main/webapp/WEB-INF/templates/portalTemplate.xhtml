@@ -1,8 +1,9 @@
- <?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
     <h:head>
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <!-- Required meta tags -->
@@ -17,27 +18,40 @@
     </h:head>
     <h:body>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+
+                    <li class="#{fn:startsWith(view.viewId, '/welcome') ? 'nav-item active' : 'nav-item'}">
+                        <h:link class="nav-link" outcome="/welcome.xhtml" value="Home"/>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li>
+
+                    <ui:fragment rendered="#{loginController.client}">
+                        <li class="#{fn:startsWith(view.viewId, '/client') ? 'nav-item active' : 'nav-item'}">
+                            <h:link class="nav-link" outcome="/client/welcome.xhtml" value="Client Portal"/>
+                        </li>
+                    </ui:fragment> 
+
+                    <ui:fragment rendered="#{loginController.retailer}">
+                        <li class="#{fn:startsWith(view.viewId, '/retailer') ? 'nav-item active' : 'nav-item'}">
+                            <h:link class="nav-link" outcome="/retailer/welcome.xhtml" value="Retailer Portal"/>
+                        </li>
+                    </ui:fragment> 
+
+                    <ui:fragment rendered="#{loginController.admin}">
+                        <li class="#{fn:startsWith(view.viewId, '/admin') ? 'nav-item active' : 'nav-item'}">
+                            <h:link class="nav-link" outcome="/admin/welcome.xhtml" value="Admin Portal"/>
+                        </li>
+                    </ui:fragment> 
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <h:form>
-                                <h:commandLink action="#{loginController.doLogout()}" value="Logout"/>
+                                <h:commandLink class="dropdown-item" action="#{loginController.doLogout()}" value="Logout"/>
                                 <a class="dropdown-item" href="#">Action</a>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <a class="dropdown-item" href="#">Something else here</a>
@@ -45,10 +59,12 @@
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"/>
-                    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-                </form>
+
+                <ul class="navbar-nav mr-sm-2">
+                    <li class="#{fn:startsWith(view.viewId, '/profile') ? 'nav-item active' : 'nav-item'}">
+                        <h:link class="nav-link" outcome="/profile.xhtml" value="#{loginController.remoteUser}"/>
+                    </li>
+                </ul>
             </div>
         </nav>
 

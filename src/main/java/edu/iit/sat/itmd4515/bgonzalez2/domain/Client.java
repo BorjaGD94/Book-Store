@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 @NamedQuery(name = "Client.findAll", query = "select c from Client c")
 @NamedQuery(name = "Client.findByName", query = "select c from Client c where c.name = :name")
+@NamedQuery(name = "Client.findByUsername", query = "select c from Client c where c.user.userName = :username")
 public class Client extends AbstractNamedEntity {
     
     @OneToMany(mappedBy = "client")
@@ -49,8 +50,8 @@ public class Client extends AbstractNamedEntity {
     public Client() {
     }
     
-    public Client(String name) {
-        super(name);
+    public Client(String name, String lastName, String email) {
+        super(name, lastName, email);
     }
       
     /**

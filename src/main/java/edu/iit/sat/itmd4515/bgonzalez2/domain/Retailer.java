@@ -18,20 +18,24 @@ import javax.persistence.OneToOne;
  *
  * @author Borja
  */
-
 @Entity
 @NamedQuery(name = "Retailer.findAll", query = "select r from Retailer r")
 @NamedQuery(name = "Retailer.findByName", query = "select r from Retailer r where r.name = :name")
+@NamedQuery(name = "Retailer.findByUsername", query = "select r from Retailer r where r.user.userName = :username")
 public class Retailer extends AbstractNamedEntity {
-    
+
     @OneToMany(mappedBy = "retailer")
     private List<Book> books = new ArrayList<>();
-    
+
     @OneToOne
     @JoinColumn(name = "USERNAME")
     private User user;
 
     public Retailer() {
+    }
+    
+    public Retailer(String name, String lastName, String email) {
+        super(name, lastName, email);
     }
 
     /**
@@ -52,9 +56,24 @@ public class Retailer extends AbstractNamedEntity {
         this.user = user;
     }
 
+    public void addBook(Book b) {
+        if (!this.books.contains(b)) {
+            this.books.add(b);
+        }
+        /*if (!b.getClient().equals(this)) {
+            // For one to many relationships is this neccessary?
+            b.setClient(this);
+        }*/
+    }
     
-    public Retailer(String name) {
-        super(name);
-    } 
-    
+    public void removeBook(Book b) {
+        if (this.books.contains(b)) {
+            this.books.remove(b);
+        }
+        //if( b.getClient().equals(this)){
+            // For one to many relationships is this neccessary?
+            // b.getClient().remove(this);
+        //}
+    }
+
 }

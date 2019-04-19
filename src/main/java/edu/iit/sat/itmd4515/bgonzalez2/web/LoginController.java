@@ -50,6 +50,22 @@ public class LoginController {
     public String getRemoteUser() {
         return facesContext.getExternalContext().getRemoteUser();
     }
+    
+    public String getRoles() {
+        return securityContext.toString();
+    }
+    
+    public boolean isRetailer(){
+        return securityContext.isCallerInRole("RETAILER_ROLE");
+    }
+    
+    public boolean isClient(){
+        return securityContext.isCallerInRole("CLIENT_ROLE");
+    }
+    
+    public boolean isAdmin(){
+        return securityContext.isCallerInRole("ADMIN_ROLE");
+    }
 
     // action methods
     public String doLogin() {

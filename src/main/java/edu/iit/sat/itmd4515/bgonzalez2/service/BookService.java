@@ -6,6 +6,7 @@
 package edu.iit.sat.itmd4515.bgonzalez2.service;
 
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Book;
+import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -19,25 +20,15 @@ import javax.persistence.PersistenceContext;
 
 @Named
 @Stateless
-public class BookService {
+public class BookService extends AbstractService<Book>{
 
     @PersistenceContext(name = "itmd4515PU")
     private EntityManager em;
 
     public BookService() {
+        super(Book.class); 
     }
-    
-    public void create(Book c){
-        em.persist(c);
-    }
-    
-    public void update(Book c){
-        em.merge(c);
-    }
-    
-    public void remove(Book c){
-        em.remove(em.merge(c));
-    }
+
     
     /**
      * Find a Book
@@ -51,6 +42,23 @@ public class BookService {
     
     public List<Book> findAll(){
         return em.createNamedQuery("Book.findAll", Book.class).getResultList();
+    }
+    
+        public void createAndAddClient(Book b, Client c){
+        // bring the front-end client into persistence context
+        c = em.getReference(Client.class, c.getId());
+        
+        // create the new book from user input
+        super.create(b);
+        // making sure the new book has its db generated id
+        em.flush();
+        
+        // settting both sides of the relationship now
+        c.addBook(b);
+        b.setClient(c);
+        // merging the client, because this entity is the owning side of the relationship
+        // it controls the database updates and creates the FK
+        em.merge(c);
     }
     
 }

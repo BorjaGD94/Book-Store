@@ -21,16 +21,22 @@ public abstract class AbstractNamedEntity extends AbstractIdentifiedEntity {
     @NotBlank(message = "Name is required")
     @Column(nullable = false, unique = true)
     protected String name;
+    @NotBlank(message = "Last name is required")
+    @Column(nullable = false, unique = true)
+    protected String lastName;
+    @NotBlank(message = "Email is required")
+    @Column(nullable = false, unique = true)
+    protected String email;
     
     public AbstractNamedEntity() {
     }
 
-    public AbstractNamedEntity(String name) {
+    public AbstractNamedEntity(String name, String lastName, String email) {
         this.name = name;
+        this.lastName = lastName;
+        this.email = email;
     }
-
     
-
     /**
      * Get the value of name
      *
@@ -48,6 +54,24 @@ public abstract class AbstractNamedEntity extends AbstractIdentifiedEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
         
     @Override
     public int hashCode() {

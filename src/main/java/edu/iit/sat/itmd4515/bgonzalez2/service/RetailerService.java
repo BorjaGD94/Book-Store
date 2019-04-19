@@ -26,4 +26,8 @@ public class RetailerService extends AbstractService<Retailer> {
         return em.createNamedQuery("Retailer.findAll", entityClass).getResultList();
     }
     
+    public Retailer findByUsername(String username) {
+        return em.createNamedQuery("Retailer.findByUsername", Retailer.class).setParameter("username", username).getSingleResult();
+    }
+    
 }

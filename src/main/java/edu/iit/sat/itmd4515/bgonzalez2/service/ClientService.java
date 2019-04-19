@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,6 +7,7 @@ package edu.iit.sat.itmd4515.bgonzalez2.service;
 
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 
 /**
@@ -16,6 +17,10 @@ import javax.ejb.Stateless;
 
 @Stateless
 public class ClientService extends AbstractService<Client> {
+
+    private static final Logger LOG = Logger.getLogger(ClientService.class.getName());
+    
+    
 
     public ClientService() {
         super(Client.class);
@@ -33,14 +38,15 @@ public class ClientService extends AbstractService<Client> {
     }
     
     public Client findByName(String name){
-        return em.createNamedQuery("Client.findByName", entityClass).setParameter("name", name).getSingleResult();
+        return em.createNamedQuery("Client.findByName", Client.class).setParameter("name", name).getSingleResult();
     }
     
     public List<Client> findAll() {
-        return em.createNamedQuery("Client.findAll", entityClass).getResultList();
+        return em.createNamedQuery("Client.findAll", Client.class).getResultList();
     }
     
     public Client findByUsername(String username) {
-        return null;
+        LOG.info("The username is: " + username);
+        return em.createNamedQuery("Client.findByUsername", Client.class).setParameter("username", username).getSingleResult();
     }
 }
