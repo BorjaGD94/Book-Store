@@ -84,7 +84,8 @@ public class StartupSeedDatabase {
         r1.setUser(ret1);
         Retailer r2 = new Retailer("retName2","lastRetName2","ret2@iit.com");
         r2.setUser(ret2);
-        
+        Client c3 = new Client("retName2","lastRetName2","ret2@iit.com");
+        c2.setUser(ret2);
         
         Book b1 = new Book("EJBBook", "EJBAuthor", "EJBGenre", LocalDate.of(2010, 3, 12));
         c1.addBook(b1);
