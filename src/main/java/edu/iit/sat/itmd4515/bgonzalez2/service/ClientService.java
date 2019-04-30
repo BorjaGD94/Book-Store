@@ -9,12 +9,14 @@ import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 
 /**
  *
  * @author Borja
  */
 
+@Named
 @Stateless
 public class ClientService extends AbstractService<Client> {
 

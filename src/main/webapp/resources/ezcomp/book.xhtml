@@ -12,6 +12,7 @@
         <cc:attribute name="book" required="true" type="edu.iit.sat.itmd4515.bgonzalez2.domain.Book" />
         <cc:attribute name="readonly" required="false" default="true" type="java.lang.Boolean" />
         <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="admin" required="false" default="false" type="java.lang.Boolean" />
     </cc:interface>
 
     <!-- IMPLEMENTATION --> 
@@ -25,7 +26,7 @@
 
         <h:form>
             <h:panelGroup layout="block" class="form-group">
-                <h:outputLabel value="Book ID #{cc.attrs.book.id}" for="petId" rendered="#{cc.attrs.readonly or not empty cc.attrs.book.id}" />
+                <h:outputLabel value="Book ID #{cc.attrs.book.id}" for="bookId" rendered="#{cc.attrs.readonly or not empty cc.attrs.book.id}" />
                 <h:inputHidden class="form-control" id="bookId" value="#{cc.attrs.book.id}"/>
                 <h:inputHidden class="form-control" id="bookVersion" value="#{cc.attrs.book.version}"/>
                 <h:message for="bookId" errorClass="text-danger"/>
@@ -72,11 +73,30 @@
                 </h:inputText>
                 <h:message for="bookYearPublished" errorClass="text-danger" />
             </h:panelGroup> 
+
             
+            <ui:fragment rendered="#{cc.attrs.admin or cc.attrs.readonly}">
+                <h:panelGroup layout="block" class="form-group">
+                    <h:outputLabel value="Book Owners" for="clients"/>
+                    <h:selectOneListbox 
+                        readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                        disabled="#{cc.attrs.readonly ? 'true' : 'false'}"
+                        converter="clientConverter"
+                        class="form-control"
+                        id="clients"
+                        value="#{cc.attrs.book.client}">
+                        <f:selectItems value="#{clientService.findAll()}"
+                                       var="client"
+                                       itemLabel="#{client.name}"
+                                       itemValue="#{client}"/>
+                    </h:selectOneListbox>
+                </h:panelGroup>   
+            </ui:fragment>
+
             <ui:fragment rendered="#{not cc.attrs.readonly}">
                 <h:commandButton value="Save Book" class="btn btn-primary" action="#{cc.attrs.action}"/>
             </ui:fragment>
-            
+
         </h:form>
 
     </cc:implementation>

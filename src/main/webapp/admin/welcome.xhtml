@@ -11,7 +11,11 @@
 
     <ui:define name="content">
         Welcome Admin #{loginController.remoteUser}
-        
+
+        <h:form>
+            <h:commandLink action="#{adminController.prepareCreateBook()}" value="Add a New Book"/>
+        </h:form>
+
         <h:dataTable 
             class = "table table-striped table-hover"
             value = "#{bookService.findAll()}" 
@@ -42,9 +46,18 @@
             </h:column>
 
             <h:column>
-                <h:outputText value="#{bookController.formatClientAsString(book)}"></h:outputText>
+                <h:outputText value="#{adminController.formatClientAsString(book)}"></h:outputText>
                 <f:facet name="header"><h:outputText value="Client"/></f:facet>
             </h:column>
+
+            <h:column>
+                <h:form>
+                    <h:commandLink action="#{adminController.prepareViewBook(book)}" value="View "/>
+                    <h:commandLink action="#{adminController.prepareEditBook(book)}" value="Edit "/>
+                    <h:commandLink action="#{adminController.doDeleteBook(book)}" value="Delete"/>
+                </h:form>
+            </h:column>
+
         </h:dataTable>
     </ui:define>
 

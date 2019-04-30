@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -85,7 +85,7 @@ public class StartupSeedDatabase {
         Retailer r2 = new Retailer("retName2","lastRetName2","ret2@iit.com");
         r2.setUser(ret2);
         Client c3 = new Client("retName2","lastRetName2","ret2@iit.com");
-        c2.setUser(ret2);
+        c3.setUser(ret2);
         
         Book b1 = new Book("EJBBook", "EJBAuthor", "EJBGenre", LocalDate.of(2010, 3, 12));
         c1.addBook(b1);
@@ -103,6 +103,7 @@ public class StartupSeedDatabase {
         bookSvc.create(b2);
         clientSvc.create(c1);
         clientSvc.create(c2);
+        clientSvc.create(c3);
         retailerSvc.create(r1);
         retailerSvc.create(r2);
         

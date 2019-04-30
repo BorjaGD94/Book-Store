@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -8,12 +8,11 @@ package edu.iit.sat.itmd4515.bgonzalez2.web;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Book;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
 import edu.iit.sat.itmd4515.bgonzalez2.service.BookService;
-import edu.iit.sat.itmd4515.bgonzalez2.service.ClientService;
+import java.util.List;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -23,50 +22,55 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class ClientController {
-
-    private static final Logger LOG = Logger.getLogger(ClientController.class.getName());
+public class AdminController {
     
-    @EJB 
-    private ClientService clientSvc;
+    private static final Logger LOG = Logger.getLogger(AdminController.class.getName());
     
-    @EJB
-    private BookService bookSvc;
+    @EJB private BookService bookSvc;
     
-    @Inject 
-    LoginController loginController;
-    
-    private Client client;
     private Book book;
- 
-    public ClientController() {
-    }
+    
+    public AdminController() {
+    }  
     
     @PostConstruct
-    private void postContsruct(){
-        LOG.info("ClientController is firing postConstruct()");
-        client = clientSvc.findByUsername(loginController.getRemoteUser());
+    private void postConstruct(){
+        LOG.info("Inside AdminController.postConstruct()");
         book = new Book();
+    }
+    
+    public List<Book> getAllBooks(){
+        return bookSvc.findAll();
+    }
+    
+    public String formatClientAsString(Book b){
+        Client c = b.getClient();
+        if (c == null){
+            return " ";
+        }else{
+            String name = c.getName();
+            return name;
+        }
     }
     
     // prepare for the action methods
     public String prepareViewBook(Book b) {
         LOG.info("Inside prepareViewPet with pet " + b.toString());
         this.book = b;
-        return "/client/viewBook.xhtml";
+        return "/admin/viewBook.xhtml";
     }
 
     public String prepareEditBook(Book b) {
         LOG.info("Inside prepareEditBook with book " + b.toString());
         this.book = b;
-        return "/client/editBook.xhtml";
+        return "/admin/editBook.xhtml";
     }
 
     public String prepareCreateBook() {
         LOG.info("Inside prepareCreateBook");
         this.book = new Book();
         
-        return "/client/editBook.xhtml";
+        return "/admin/editBook.xhtml";
 
     }
 
@@ -79,49 +83,42 @@ public class ClientController {
         
         if(this.book.getId() != null){
             LOG.info("Preparing to call an update in the service layer with " + this.book.toString());
-            bookSvc.editBookWithNoChangeToClient(book);
+            //bookSvc.editBookWithNoChangeToClient(book);
+            bookSvc.update(book);
         } else {
             LOG.info("Preparing to create in the service layer with " + this.book.toString());
-            bookSvc.createWithClient(book, client);
+            bookSvc.createAndAddClient(book);
         }
         
         // option 1 = we could force a refresh of the owner to refresh the collections
         //client = clientSvc.findByUsername(loginController.getRemoteUser());
         
         // option 2 = force a faces-redirect
-        return "/client/welcome.xhtml?faces-redirect=true";
+        return "/admin/welcome.xhtml?faces-redirect=true";
     }
 
     public String doDeleteBook(Book b) {
         LOG.info("Inside doDeleteBook with book " + b.toString());
         bookSvc.remove(b);
-        return "/client/welcome.xhtml?faces-redirect=true";
+        return "/admin/welcome.xhtml";
     }
     
-    /**
-     * Get the value of client
+        /**
+     * Get the value of book
      *
-     * @return the value of client
+     * @return the value of book
      */
-    public Client getClient() {
-        return client;
-    }
-
-    /**
-     * Set the value of client
-     *
-     * @param client new value of client
-     */
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public Book getBook() {
         return book;
     }
 
+    /**
+     * Set the value of book
+     *
+     * @param book new value of book
+     */
     public void setBook(Book book) {
         this.book = book;
     }
-      
+    
 }
