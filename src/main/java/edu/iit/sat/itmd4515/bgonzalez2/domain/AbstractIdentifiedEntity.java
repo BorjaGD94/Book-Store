@@ -27,6 +27,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractIdentifiedEntity {
     
+    /**
+     *
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -106,11 +109,18 @@ public abstract class AbstractIdentifiedEntity {
         this.version = version;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }

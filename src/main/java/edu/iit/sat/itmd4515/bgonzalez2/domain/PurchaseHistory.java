@@ -61,11 +61,17 @@ public class PurchaseHistory extends AbstractIdentifiedEntity {
         this.book = book;
     }
 
-    
+    /**
+     *
+     */
     public PurchaseHistory() {
         
     }
 
+    /**
+     *
+     * @param purchaseDate
+     */
     public PurchaseHistory(LocalDate purchaseDate) {
         this.purchaseDate = purchaseDate;
     }

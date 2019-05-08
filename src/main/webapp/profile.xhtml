@@ -3,16 +3,150 @@
 <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./WEB-INF/templates/portalTemplate.xhtml">
 
-    <ui:define name="title">
-        User Profile Page
-    </ui:define>
-
     <ui:define name="content">
-        Your user information is:
-        <ul>
-            <li>#{loginController.remoteUser}</li>
-            <li>#{loginController.roles}</li>
-        </ul>
+        <ui:fragment rendered="#{loginController.client}">
+            <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Client Information</h4>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{clientController.client.name}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{clientController.client.lastName}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="email" value="#{clientController.client.email}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{loginController.remoteUser}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="password" value="#{loginController.password}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                            <input type="button" class="btn btn-primary" value="Save Changes"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </ui:fragment>
+        
+        <ui:fragment rendered="#{loginController.retailer}">
+            <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Retailer Information</h4>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{retailerController.retailer.name}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{retailerController.retailer.lastName}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="email" value="#{retailerController.retailer.email}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{loginController.remoteUser}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="password" value="#{loginController.password}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                            <input type="button" class="btn btn-primary" value="Save Changes"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </ui:fragment>
+        
+        <ui:fragment rendered="#{loginController.admin}">
+            <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Admin Information</h4>
+            </div>
+            <div class="card-body">
+                <form class="form" role="form" autocomplete="off">
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{adminController.admin.name}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{adminController.admin.lastName}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="email" value="#{adminController.admin.email}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="text" value="#{loginController.remoteUser}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                        <div class="col-lg-9">
+                            <input class="form-control" type="password" value="#{loginController.password}"></input>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-lg-3 col-form-label form-control-label"></label>
+                        <div class="col-lg-9">
+                            <input type="button" class="btn btn-primary" value="Save Changes"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </ui:fragment>
 
     </ui:define>
 

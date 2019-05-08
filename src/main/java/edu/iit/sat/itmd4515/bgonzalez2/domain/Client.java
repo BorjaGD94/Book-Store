@@ -46,10 +46,18 @@ public class Client extends AbstractNamedEntity {
     @JoinColumn(name = "USERNAME")
     private User user;
     
-    
+    /**
+     *
+     */
     public Client() {
     }
     
+    /**
+     *
+     * @param name
+     * @param lastName
+     * @param email
+     */
     public Client(String name, String lastName, String email) {
         super(name, lastName, email);
     }
@@ -129,10 +137,20 @@ public class Client extends AbstractNamedEntity {
         return "Client{" + "id=" + id + ", name=" + name + "}";
     }
 
+    /**
+     * Get the value of user
+     * 
+     * @return
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Set the value of user
+     * 
+     * @param user
+     */
     public void setUser(User user) {
         this.user = user;
     }

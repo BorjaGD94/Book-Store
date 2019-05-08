@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="user" required="true" type="edu.iit.sat.itmd4515.bgonzalez2.domain.security.User" />
+        <cc:attribute name="userDet" required="true" type="edu.iit.sat.itmd4515.bgonzalez2.domain.AbstractNamedEntity" />
+        <cc:attribute name="readonly" required="false" default="true" type="java.lang.Boolean" />
+        <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+        <cc:attribute name="admin" required="false" default="false" type="java.lang.Boolean" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION --> 
+    <cc:implementation>
+
+        <h:form>
+
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="First Name" for="name"/>
+                <h:inputText 
+                    class="form-control" 
+                    id="name" 
+                    value="#{cc.attrs.userDet.name}" />
+                <h:message for="name" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Last Name" for="lastName"/>
+                <h:inputText 
+                    class="form-control" 
+                    id="lastName" 
+                    value="#{cc.attrs.userDet.lastName}" />
+                <h:message for="lastName" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Email" for="email"/>
+                <h:inputText 
+                    class="form-control" 
+                    id="email" 
+                    value="#{cc.attrs.userDet.email}" />
+                <h:message for="email" errorClass="text-danger" />
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Username" for="userName"/>
+                <h:inputText 
+                    class="form-control"  
+                    id="userName" 
+                    value="#{cc.attrs.user.userName}">
+                </h:inputText>
+                <h:message for="userName" errorClass="text-danger" />
+            </h:panelGroup> 
+            <h:panelGroup layout="block" class="form-group">
+                <h:outputLabel value="Password" for="password"/>
+                <h:inputSecret 
+                    class="form-control"  
+                    id="password" 
+                    value="#{cc.attrs.user.password}">
+                </h:inputSecret>
+                <h:message for="password" errorClass="text-danger" />
+            </h:panelGroup> 
+
+
+            <ui:fragment rendered="#{cc.attrs.admin or cc.attrs.readonly}">
+                <h:panelGroup layout="block" class="form-group">
+                    <h:outputLabel value="User Types" for="groups"/>
+                    <h:selectManyListbox
+                        readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                        disabled="#{cc.attrs.readonly ? 'true' : 'false'}"
+                        converter="groupConverter"
+                        class="form-control"
+                        id="groups"
+                        value="#{cc.attrs.user.groups}">
+                        <f:selectItems value="#{groupService.findAll()}"
+                                       var="group"
+                                       itemLabel="#{group.groupName}"
+                                       itemValue="#{group}"/>
+                    </h:selectManyListbox>
+                    <h:message for="groups" errorClass="text-danger" />
+                </h:panelGroup>   
+            </ui:fragment>
+
+            <ui:fragment rendered="#{not cc.attrs.readonly}">
+                <h:commandButton value="Save User" class="btn btn-primary" action="#{cc.attrs.action}"/>
+            </ui:fragment>
+        </h:form>
+
+    </cc:implementation>
+</html>

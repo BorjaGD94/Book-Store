@@ -5,6 +5,7 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.service;
 
+import edu.iit.sat.itmd4515.bgonzalez2.domain.Administrator;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Book;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Retailer;
@@ -39,10 +40,16 @@ public class StartupSeedDatabase {
     private RetailerService retailerSvc;
     
     @EJB
+    private AdminService adminSvc;
+    
+    @EJB
     private UserService userSvc;
     @EJB
     private GroupService groupSvc;
 
+    /**
+     *
+     */
     public StartupSeedDatabase() {
     }
     
@@ -50,7 +57,7 @@ public class StartupSeedDatabase {
     private void seedDatabase(){
         
         // create admin user and group
-        User adminUser = new User("admin", "admin", true);
+        User adminUser = new User("admin", "admin", true);  
         Group adminGroup = new Group("ADMIN_GROUP", "This is the identity store group for administrators.  It is managed by security and operations folks who care deeply about security.");
         adminUser.addGroup(adminGroup);
         groupSvc.create(adminGroup);
@@ -75,7 +82,8 @@ public class StartupSeedDatabase {
         userSvc.create(client1);
         userSvc.create(client2);
         
-        
+        Administrator a = new Administrator("Borja","Gonzalez","bgonzalez@iit.com");
+        a.setUser(adminUser);
         Client c1 = new Client("name1","lastName1","name1@iit.com");
         c1.setUser(client1);
         Client c2 = new Client("name2","lastName2","name2@iit.com");
@@ -106,6 +114,7 @@ public class StartupSeedDatabase {
         clientSvc.create(c3);
         retailerSvc.create(r1);
         retailerSvc.create(r2);
+        adminSvc.create(a);
         
         for(Book b : bookSvc.findAll()){
             LOG.info(b.toString());

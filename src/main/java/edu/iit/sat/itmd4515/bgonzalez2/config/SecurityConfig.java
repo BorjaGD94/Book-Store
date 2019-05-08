@@ -14,6 +14,9 @@ import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 
 /**
  *
+ * This class is an ApplicationScoped configuration bean to set up the
+ * security structures neccesary for JEE security
+ * 
  * @author Borja
  */
 @Named

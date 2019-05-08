@@ -17,15 +17,27 @@ import javax.ejb.Stateless;
 @Stateless
 public class RetailerService extends AbstractService<Retailer> {
 
+    /**
+     *
+     */
     public RetailerService() {
         super(Retailer.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Retailer> findAll() {
         return em.createNamedQuery("Retailer.findAll", entityClass).getResultList();
     }
     
+    /**
+     *
+     * @param username
+     * @return
+     */
     public Retailer findByUsername(String username) {
         return em.createNamedQuery("Retailer.findByUsername", Retailer.class).setParameter("username", username).getSingleResult();
     }

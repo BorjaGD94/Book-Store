@@ -22,14 +22,28 @@ import org.junit.BeforeClass;
  */
 public class AbstractJPATest {
     private static EntityManagerFactory emf;
+
+    /**
+     *
+     */
     protected EntityManager em;
+
+    /**
+     *
+     */
     protected EntityTransaction tx;
     
+    /**
+     *
+     */
     @BeforeClass
     public static void beforeClassTestFixtureRunsOncePerClass() {
         emf = Persistence.createEntityManagerFactory("itmd4515testPU");
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void afterClassTestFixtureRunsOncePerClass() {
         if (emf != null){
@@ -37,6 +51,9 @@ public class AbstractJPATest {
         }
     }
      
+    /**
+     *
+     */
     @Before
     public void beforeEachTestFixture() {
         em = emf.createEntityManager();
@@ -49,6 +66,9 @@ public class AbstractJPATest {
         tx.commit();     
     }
     
+    /**
+     *
+     */
     @After
     public void afterEachTestFixture() {
         

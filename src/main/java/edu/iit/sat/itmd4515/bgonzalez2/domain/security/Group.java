@@ -21,6 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "sec_group")
 @NamedQuery(name="Group.findAll", query = "select g from Group g")
+@NamedQuery(name="Group.findByGroupName", query = "select g from Group g where g.groupName = :groupName")
 public class Group {
     
     @Id
@@ -30,9 +31,17 @@ public class Group {
     @ManyToMany(mappedBy = "groups")
     private List<User> users = new ArrayList<>();
 
+    /**
+     *
+     */
     public Group() {
     }
     
+    /**
+     *
+     * @param groupName
+     * @param groupDesc
+     */
     public Group(String groupName, String groupDesc) {
         this.groupName = groupName;
         this.groupDesc = groupDesc;
@@ -93,6 +102,11 @@ public class Group {
      */
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" + "groupName=" + groupName + ", groupDesc=" + groupDesc + ", users=" + users + '}';
     }
 
 }

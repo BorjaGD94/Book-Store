@@ -30,6 +30,10 @@ public class ClientREST {
     
     @EJB ClientService clientService;
     
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("/ping")
     @Produces(MediaType.TEXT_PLAIN)
@@ -37,6 +41,11 @@ public class ClientREST {
         return "Thou has been pinged from /v1/owners";
     }
     
+    /**
+     *
+     * @param name
+     * @return
+     */
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Client> getClients(@QueryParam("name") String name){
@@ -51,6 +60,11 @@ public class ClientREST {
         return results;
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("/{id}")
     public Client getClientById(@PathParam("id") Long id){
@@ -61,6 +75,12 @@ public class ClientREST {
 //    public Client getClientByName(@PathParam("name") String name){
 //        return clientService.findByName(name);
 //    }
+
+    /**
+     *
+     * @param c
+     * @return
+     */
     
     @POST
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})

@@ -31,9 +31,18 @@ public class Retailer extends AbstractNamedEntity {
     @JoinColumn(name = "USERNAME")
     private User user;
 
+    /**
+     *
+     */
     public Retailer() {
     }
     
+    /**
+     *
+     * @param name
+     * @param lastName
+     * @param email
+     */
     public Retailer(String name, String lastName, String email) {
         super(name, lastName, email);
     }
@@ -56,6 +65,10 @@ public class Retailer extends AbstractNamedEntity {
         this.user = user;
     }
 
+    /**
+     *
+     * @param b
+     */
     public void addBook(Book b) {
         if (!this.books.contains(b)) {
             this.books.add(b);
@@ -66,6 +79,10 @@ public class Retailer extends AbstractNamedEntity {
         }*/
     }
     
+    /**
+     *
+     * @param b
+     */
     public void removeBook(Book b) {
         if (this.books.contains(b)) {
             this.books.remove(b);

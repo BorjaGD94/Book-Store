@@ -17,10 +17,17 @@ import javax.ejb.Stateless;
 @Stateless
 public class PurchaseHistoryService extends AbstractService<PurchaseHistory>{
 
+    /**
+     *
+     */
     public PurchaseHistoryService() {
         super(PurchaseHistory.class);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<PurchaseHistory> findAll() {
         return em.createNamedQuery("PurchaseHistory.findAll", entityClass).getResultList();

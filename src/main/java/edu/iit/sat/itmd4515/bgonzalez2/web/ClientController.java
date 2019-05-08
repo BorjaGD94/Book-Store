@@ -39,6 +39,9 @@ public class ClientController {
     private Client client;
     private Book book;
  
+    /**
+     *
+     */
     public ClientController() {
     }
     
@@ -50,18 +53,33 @@ public class ClientController {
     }
     
     // prepare for the action methods
+
+    /**
+     *
+     * @param b
+     * @return
+     */
     public String prepareViewBook(Book b) {
         LOG.info("Inside prepareViewPet with pet " + b.toString());
         this.book = b;
         return "/client/viewBook.xhtml";
     }
 
+    /**
+     *
+     * @param b
+     * @return
+     */
     public String prepareEditBook(Book b) {
         LOG.info("Inside prepareEditBook with book " + b.toString());
         this.book = b;
         return "/client/editBook.xhtml";
     }
 
+    /**
+     *
+     * @return
+     */
     public String prepareCreateBook() {
         LOG.info("Inside prepareCreateBook");
         this.book = new Book();
@@ -72,6 +90,11 @@ public class ClientController {
 
     //
     // action methods
+
+    /**
+     *
+     * @return
+     */
     public String doSaveBook() {
         // when complete, this method will invoke service layer
         // this method will need to be smart enough to know when to edit, and when to create
@@ -92,6 +115,11 @@ public class ClientController {
         return "/client/welcome.xhtml?faces-redirect=true";
     }
 
+    /**
+     *
+     * @param b
+     * @return
+     */
     public String doDeleteBook(Book b) {
         LOG.info("Inside doDeleteBook with book " + b.toString());
         bookSvc.remove(b);
@@ -116,10 +144,20 @@ public class ClientController {
         this.client = client;
     }
 
+    /**
+     * Get the value of book
+     * 
+     * @return
+     */
     public Book getBook() {
         return book;
     }
 
+    /**
+     * Set the value of book
+     * 
+     * @param book
+     */
     public void setBook(Book book) {
         this.book = book;
     }

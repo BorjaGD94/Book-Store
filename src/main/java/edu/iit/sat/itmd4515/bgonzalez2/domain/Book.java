@@ -24,6 +24,9 @@ import javax.validation.constraints.PastOrPresent;
 @NamedQuery(name = "Book.findByTitle", query = "select b from Book b where b.title = :title")
 public class Book extends AbstractIdentifiedEntity{
     
+    /**
+     *
+     */
     @NotBlank(message = "This field can't be empty")
     @Column(nullable = false, unique = true)
     protected String title;
@@ -46,6 +49,9 @@ public class Book extends AbstractIdentifiedEntity{
     @PastOrPresent(message = "Books can only have a publishing date in the past or the present, not in the future")
     private LocalDate yearPublished;
 
+    /**
+     *
+     */
     public Book() {
     }
     
@@ -64,10 +70,18 @@ public class Book extends AbstractIdentifiedEntity{
         this.yearPublished = yearPublished;
     }
 
+    /**
+     *
+     * @return
+     */
     public PurchaseHistory getPurchase() {
         return purchase;
     }
 
+    /**
+     *
+     * @param purchase
+     */
     public void setPurchase(PurchaseHistory purchase) {
         this.purchase = purchase;
     }
@@ -126,26 +140,50 @@ public class Book extends AbstractIdentifiedEntity{
         this.yearPublished = yearPublished;
     }
 
+    /**
+     *
+     * @return
+     */
     public Client getClient() {
         return client;
     }
 
+    /**
+     *
+     * @param client
+     */
     public void setClient(Client client) {
         this.client = client;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     *
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     *
+     * @return
+     */
     public Retailer getRetailer() {
         return retailer;
     }
 
+    /**
+     *
+     * @param retailer
+     */
     public void setRetailer(Retailer retailer) {
         this.retailer = retailer;
     }

@@ -42,32 +42,63 @@ public class LoginController {
     private SecurityContext securityContext;
     @Inject
     private FacesContext facesContext;
+    
 
+    /**
+     *
+     */
     public LoginController() {
     }
 
     // authenticated username from JSR-375 security
+
+    /**
+     *
+     * @return
+     */
     public String getRemoteUser() {
         return facesContext.getExternalContext().getRemoteUser();
     }
     
+    
+    /**
+     *
+     * @return
+     */
     public String getRoles() {
         return securityContext.toString();
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isRetailer(){
         return securityContext.isCallerInRole("RETAILER_ROLE");
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isClient(){
         return securityContext.isCallerInRole("CLIENT_ROLE");
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isAdmin(){
         return securityContext.isCallerInRole("ADMIN_ROLE");
     }
 
     // action methods
+
+    /**
+     *
+     * @return
+     */
     public String doLogin() {
         LOG.info("inside doLogin");
         Credential credential = new UsernamePasswordCredential(username, new Password(password));
@@ -98,6 +129,10 @@ public class LoginController {
         return "/welcome.xhtml?faces-redirect=true";
     }
 
+    /**
+     *
+     * @return
+     */
     public String doLogout() {
 
         try {
@@ -132,10 +167,20 @@ public class LoginController {
         this.username = username;
     }
 
+    /**
+     * Get the value of password
+     * 
+     * @return the value of password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Set the value of password
+     * 
+     * @param password new value of password
+     */
     public void setPassword(String password) {
         this.password = password;
     }

@@ -24,9 +24,19 @@ public class ClientSOAP {
 
     @EJB ClientService clientService;
     
+    /**
+     *
+     */
     public ClientSOAP() {
     }
     
+    /**
+     *
+     * @param name
+     * @param lastName
+     * @param email
+     * @return
+     */
     @WebMethod
     public Client createNewClient(String name, String lastName, String email){
         LOG.info("Inside createNewOwner SOAP Service with " + name);

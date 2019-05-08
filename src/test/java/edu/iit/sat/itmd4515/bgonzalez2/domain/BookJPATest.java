@@ -23,6 +23,10 @@ public class BookJPATest extends AbstractJPATest {
     private static final Logger LOG = Logger.getLogger(BookJPATest.class.getName());
     
     //testing my read operation.
+
+    /**
+     *
+     */
     @Test
     public void testFindExistingBook() {
         // Knowing the PK we would just have to use em.find
@@ -37,6 +41,10 @@ public class BookJPATest extends AbstractJPATest {
     
     // Test a new removal by creating a new book and then removing it
     // Assert that you can no longer find it in the database
+
+    /**
+     *
+     */
     @Test
     public void testRemoveBook() {
         Book b = new Book("Title to Remove", "Author to Remove", "Genre to Remove", LocalDate.of(2010, 1, 7));
@@ -59,6 +67,9 @@ public class BookJPATest extends AbstractJPATest {
         assertNull(removedBook);
     }
     
+    /**
+     *
+     */
     @Test
     public void testUpdateBook() {
         Book book = new Book("Title to update", "Author 1", "Genre 1", LocalDate.of(2010, 1, 7));
@@ -86,6 +97,9 @@ public class BookJPATest extends AbstractJPATest {
         tx.commit();
     }
     
+    /**
+     *
+     */
     @Test
     public void testCreateNewValidBook() {
         Book b = new Book("New Title", "New Author", "New Genre", LocalDate.of(2010, 1, 7));
@@ -110,6 +124,10 @@ public class BookJPATest extends AbstractJPATest {
     }
     
     //expected failure scenario. My expected exception is too general in this case... would be better if it was something specific
+
+    /**
+     *
+     */
     @Test(expected = RollbackException.class)
     public void testCreateInvalidBookDatabaseFail() {
         Book b = new Book(null, "New Author", "New Genre", LocalDate.of(2010, 1, 7));
@@ -128,6 +146,9 @@ public class BookJPATest extends AbstractJPATest {
         assertTrue("ID should be greater than 0", b.getId() > 0l);
     }
     
+    /**
+     *
+     */
     @Test
     public void testBookClientOneToManyBiDirectionalRelationship() {
         Book b = new Book("Relationship Title", "New Relationship Author", "Genre", LocalDate.of(2010, 1, 7));

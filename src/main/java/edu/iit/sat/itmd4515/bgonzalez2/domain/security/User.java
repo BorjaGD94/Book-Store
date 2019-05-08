@@ -15,6 +15,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 /**
  *
@@ -28,10 +30,13 @@ import javax.persistence.Table;
 public class User {
     
     @Id
+    @NotBlank(message = "Username is required")
     private String userName;
+    @NotBlank(message = "Password is required")
     private String password;
     private Boolean enabled;
     
+    @NotEmpty(message = "A user must belong to at least one user type")
     @ManyToMany
     @JoinTable(
             name = "sec_user_groups",
@@ -39,15 +44,28 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "GROUPNAME"))
     private List<Group> groups = new ArrayList<>();
     
+    /**
+     *
+     */
     public User() {
     }
 
+    /**
+     *
+     * @param userName
+     * @param password
+     * @param enabled
+     */
     public User(String userName, String password, Boolean enabled) {
         this.userName = userName;
         this.password = password;
         this.enabled = enabled;
     }
     
+    /**
+     *
+     * @param g
+     */
     public void addGroup(Group g){
         if(! this.groups.contains(g)){
             this.groups.add(g);
@@ -132,4 +150,11 @@ public class User {
         this.userName = userName;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "userName=" + userName + ", password=" + password + ", groups=" + groups + '}';
+    }
+    
+    
+    
 }

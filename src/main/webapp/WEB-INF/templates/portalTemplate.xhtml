@@ -52,7 +52,9 @@
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <h:form>
                                 <h:commandLink class="dropdown-item" action="#{loginController.doLogout()}" value="Logout"/>
-                                <a class="dropdown-item" href="#">Action</a>
+                                <ui:fragment rendered="#{loginController.admin}">
+                                    <h:commandLink class="dropdown-item" action="#{adminController.prepareCreateUser()}" value="Add New User"/>
+                                </ui:fragment>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </h:form>

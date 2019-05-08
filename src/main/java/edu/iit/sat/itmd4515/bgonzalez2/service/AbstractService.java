@@ -12,26 +12,49 @@ import javax.persistence.PersistenceContext;
 /**
  *
  * @author Borja
+ * @param <T>
  */
 public abstract class AbstractService<T> {
     
+    /**
+     *
+     */
     @PersistenceContext(name = "itmd4515PU")
     protected EntityManager em;
     
+    /**
+     *
+     */
     protected Class<T> entityClass;
     
+    /**
+     *
+     * @param entityClass
+     */
     protected AbstractService(Class entityClass){
         this.entityClass = entityClass;
     }
     
+    /**
+     *
+     * @param entity
+     */
     public void create(T entity){
         em.persist(entity);
     }
     
+    /**
+     *
+     * @param entity
+     */
     public void update(T entity){
         em.merge(entity);
     }
     
+    /**
+     *
+     * @param entity
+     */
     public void remove(T entity){
         em.remove(em.merge(entity));
     }
@@ -46,6 +69,10 @@ public abstract class AbstractService<T> {
         return em.find(entityClass, id);
     }
     
+    /**
+     *
+     * @return
+     */
     public abstract List<T> findAll();
         //return em.createNamedQuery("Client.findAll", Client.class).getResultList();
 }

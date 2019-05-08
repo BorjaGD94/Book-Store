@@ -1,0 +1,24 @@
+-classpath
+'/Users/Borja/.m2/repository/javax/javaee-web-api/8.0/javaee-web-api-8.0.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/Users/Borja/NetBeansProjects/bgonzalez2-fp/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2019. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/Borja/NetBeansProjects/bgonzalez2-fp/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'bgonzalez2-fp 1.0-SNAPSHOT API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' '/Users/Borja/NetBeansProjects/bgonzalez2-fp/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'bgonzalez2-fp 1.0-SNAPSHOT API'
