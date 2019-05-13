@@ -5,11 +5,15 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.service;
 
+import edu.iit.sat.itmd4515.bgonzalez2.domain.Book;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
+import edu.iit.sat.itmd4515.bgonzalez2.domain.PurchaseHistory;
+import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import java.time.LocalDate;
 
 /**
  *
@@ -75,5 +79,43 @@ public class ClientService extends AbstractService<Client> {
     public Client findByUsername(String username) {
         LOG.info("The username is: " + username);
         return em.createNamedQuery("Client.findByUsername", Client.class).setParameter("username", username).getSingleResult();
+    }
+    
+    /**
+     * The createWithClient method will create a new book in the database, and
+     * associate that book with the client that owns it passed as a parameter.
+     * 
+     * @param b the new book to create in the database
+     * @param c the client that owns the book, to whom the book will be added
+     */
+    public void associateBook(Book b, Client c) {
+        //client = clientSvc.findByUsername(loginController.getRemoteUser());
+        Book bookFromDatabase = em.getReference(Book.class, b.getId());
+        bookFromDatabase.setClient(c);
+        c.addBook(bookFromDatabase);
+        em.merge(c);
+        em.merge(bookFromDatabase);
+        
+        PurchaseHistory pur = new PurchaseHistory(LocalDate.now());
+        pur.setClient(c);
+        pur.setBook(bookFromDatabase);
+        em.merge(pur);
+    }
+    
+    /**
+     *
+     * @param a
+     * @param u
+     */
+    public void updateClientInfo(Client a, User u){
+        Client clientFromDatabase = em.getReference(Client.class, a.getId());
+        
+        
+        clientFromDatabase.setName(a.getName());
+        clientFromDatabase.setLastName(a.getLastName());
+        clientFromDatabase.setEmail(a.getEmail());
+        clientFromDatabase.getUser().setUserName(u.getUserName());
+        
+        em.merge(clientFromDatabase);
     }
 }

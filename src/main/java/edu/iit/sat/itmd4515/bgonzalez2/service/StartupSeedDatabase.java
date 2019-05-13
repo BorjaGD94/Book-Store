@@ -8,6 +8,7 @@ package edu.iit.sat.itmd4515.bgonzalez2.service;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Administrator;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Book;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
+import edu.iit.sat.itmd4515.bgonzalez2.domain.PurchaseHistory;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Retailer;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.security.Group;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
@@ -41,6 +42,9 @@ public class StartupSeedDatabase {
     
     @EJB
     private AdminService adminSvc;
+    
+    @EJB
+    private PurchaseHistoryService purSvc;
     
     @EJB
     private UserService userSvc;
@@ -106,19 +110,50 @@ public class StartupSeedDatabase {
         b2.setClient(c2);
         r2.addBook(b2);
         b2.setRetailer(r2);
+        
+        // These are books that are not owned (Books available for purchase)
+        Book b3 = new Book("AnyBook", "AnyAuthor", "AnyGenre", LocalDate.of(2010,06, 11));
+        Book b4 = new Book("AnyBook1", "AnyAuthor1", "AnyGenre1", LocalDate.of(2010,10, 21));
+        Book b5 = new Book("AnyBook2", "AnyAuthor2", "AnyGenre2", LocalDate.of(2005,03, 06));
+        r2.addBook(b3);
+        r2.addBook(b4);
+        r1.addBook(b5);
+        b3.setRetailer(r2);
+        b4.setRetailer(r2);
+        b5.setRetailer(r1);
+        
+        // The books that have clients set, should also have a purchase associated, 
+        // because if a book belongs to a client he has purchased this book previously
+        PurchaseHistory pur = new PurchaseHistory(LocalDate.now());
+        PurchaseHistory pur1 = new PurchaseHistory(LocalDate.now());
+        c2.addPurchase(pur);
+        pur.setClient(c2);
+        pur.setBook(b2);
+        c1.addPurchase(pur1);
+        pur1.setClient(c1);
+        pur1.setBook(b1);
 
         bookSvc.create(b1);
         bookSvc.create(b2);
+        bookSvc.create(b3);
+        bookSvc.create(b4);
+        bookSvc.create(b5);
         clientSvc.create(c1);
         clientSvc.create(c2);
         clientSvc.create(c3);
         retailerSvc.create(r1);
         retailerSvc.create(r2);
+        purSvc.create(pur);
+        purSvc.create(pur1);
         adminSvc.create(a);
         
         for(Book b : bookSvc.findAll()){
             LOG.info(b.toString());
-            LOG.info("\t" + b.getClient().toString());
+            if(b.getClient() == null){
+                continue;
+            }else {
+                LOG.info("\t" + b.getClient().toString());
+            }
         }
     }
 }

@@ -5,8 +5,10 @@
  */
 package edu.iit.sat.itmd4515.bgonzalez2.web;
 
+import edu.iit.sat.itmd4515.bgonzalez2.domain.AbstractNamedEntity;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Book;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
+import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import edu.iit.sat.itmd4515.bgonzalez2.service.BookService;
 import edu.iit.sat.itmd4515.bgonzalez2.service.ClientService;
 import java.util.logging.Logger;
@@ -38,6 +40,8 @@ public class ClientController {
     
     private Client client;
     private Book book;
+    private User user;
+    private AbstractNamedEntity userDetails;
  
     /**
      *
@@ -56,8 +60,8 @@ public class ClientController {
 
     /**
      *
-     * @param b
-     * @return
+     * @param b contains the book the user seleceted for viewing
+     * @return a string with the path were the book can be viewed
      */
     public String prepareViewBook(Book b) {
         LOG.info("Inside prepareViewPet with pet " + b.toString());
@@ -65,64 +69,64 @@ public class ClientController {
         return "/client/viewBook.xhtml";
     }
 
-    /**
-     *
-     * @param b
-     * @return
-     */
-    public String prepareEditBook(Book b) {
-        LOG.info("Inside prepareEditBook with book " + b.toString());
-        this.book = b;
-        return "/client/editBook.xhtml";
-    }
 
+    
     /**
      *
-     * @return
+     * @param c is the client currently logged in 
+     * @return the path were the client can view the available books
      */
-    public String prepareCreateBook() {
-        LOG.info("Inside prepareCreateBook");
-        this.book = new Book();
+    public String prepareViewBooks(Client c) {
+        LOG.info("Inside prepareCreateBook");  
+        this.client = c;
+        return "/client/buyBook.xhtml";
+    }
+    
+    /**
+     *
+     * @param c is the client currently logged in 
+     * @return the path were the client can edit his profile information
+     */  
+    public String prepareEditClient(Client c) {
+        LOG.info("Inside prepareEditClient with : " + c.toString());
         
-        return "/client/editBook.xhtml";
-
+        //Get the info introduced by the client
+        this.user = c.getUser();       
+        this.userDetails = new AbstractNamedEntity(c.getName(), c.getLastName(), c.getEmail()) {};
+        return "/client/editUser.xhtml";
+    }
+    
+    
+    /**
+     *
+     * @param a is the client currently logged in
+     * @param u is the user currently logged in
+     * 
+     * @return the path to the welcome page
+     */
+    public String updateUser(Client a, User u){
+        LOG.info("Inside update User with client " + a.toString());
+        LOG.info("Inside update User with username: " + u.toString());
+        clientSvc.updateClientInfo(a, u);
+        
+        return "/admin/welcome.xhtml?faces-redirect=true";
     }
 
-    //
+
+    
     // action methods
 
+    
     /**
      *
-     * @return
+     * @param b contains the book that the client wants to buy
+     * @param c contains the client currently loggen in and that wants to buy the book
+     * 
+     * @return a string with the path to the clients welcome page
      */
-    public String doSaveBook() {
-        // when complete, this method will invoke service layer
-        // this method will need to be smart enough to know when to edit, and when to create
-        LOG.info("Inside doSaveBook with book " + book.toString());
-        
-        if(this.book.getId() != null){
-            LOG.info("Preparing to call an update in the service layer with " + this.book.toString());
-            bookSvc.editBookWithNoChangeToClient(book);
-        } else {
-            LOG.info("Preparing to create in the service layer with " + this.book.toString());
-            bookSvc.createWithClient(book, client);
-        }
-        
-        // option 1 = we could force a refresh of the owner to refresh the collections
-        //client = clientSvc.findByUsername(loginController.getRemoteUser());
-        
-        // option 2 = force a faces-redirect
-        return "/client/welcome.xhtml?faces-redirect=true";
-    }
-
-    /**
-     *
-     * @param b
-     * @return
-     */
-    public String doDeleteBook(Book b) {
-        LOG.info("Inside doDeleteBook with book " + b.toString());
-        bookSvc.remove(b);
+    public String doBuyBook(Book b, Client c) {
+        LOG.info("Inside doBuyBook with book " + b.toString());
+        clientSvc.associateBook(b, c);
         return "/client/welcome.xhtml?faces-redirect=true";
     }
     
@@ -147,7 +151,7 @@ public class ClientController {
     /**
      * Get the value of book
      * 
-     * @return
+     * @return the value of book
      */
     public Book getBook() {
         return book;

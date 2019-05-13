@@ -7,13 +7,13 @@
                 xmlns:ezcomp="http://xmlns.jcp.org/jsf/composite/ezcomp">
 
     <ui:define name="title">
-        Client Content
+        Retailer Content
     </ui:define>
 
     <ui:define name="content">
-        Welcome Client #{loginController.remoteUser}
+        Welcome Retailer #{loginController.remoteUser}
         
-        <ezcomp:book book="#{clientController.book}" readonly="false" action="#{clientController.doSaveBook()}"/>
+        <ezcomp:book book="#{retailerController.book}" readonly="false" action="#{retailerController.doSaveBook()}"/>
 
     </ui:define>
 

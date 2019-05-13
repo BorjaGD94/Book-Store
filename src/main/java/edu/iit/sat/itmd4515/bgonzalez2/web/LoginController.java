@@ -60,7 +60,6 @@ public class LoginController {
         return facesContext.getExternalContext().getRemoteUser();
     }
     
-    
     /**
      *
      * @return
@@ -173,6 +172,7 @@ public class LoginController {
      * @return the value of password
      */
     public String getPassword() {
+        LOG.info("Password: " + password);
         return password;
     }
 

@@ -7,6 +7,7 @@ package edu.iit.sat.itmd4515.bgonzalez2.domain.security;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.Id;
@@ -27,6 +28,7 @@ import javax.validation.constraints.NotEmpty;
 @EntityListeners(UserListener.class) 
 @Table(name = "sec_user")
 @NamedQuery(name="User.findAll", query = "select u from User u")
+@NamedQuery(name = "User.findByUsername", query = "select u from User u where u.userName = :username")
 public class User {
     
     @Id
@@ -154,7 +156,7 @@ public class User {
     public String toString() {
         return "User{" + "userName=" + userName + ", password=" + password + ", groups=" + groups + '}';
     }
-    
-    
-    
+
+   
+     
 }

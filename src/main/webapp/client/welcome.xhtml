@@ -13,7 +13,7 @@
         Welcome Client #{loginController.remoteUser}
         
         <h:form>
-            <h:commandLink action="#{clientController.prepareCreateBook()}" value="Add a New Book"/>
+            <h:commandLink action="#{clientController.prepareViewBooks(clientService.findByUsername(loginController.remoteUser))}" value="Buy a New Book"/>
         </h:form>
 
         <h:dataTable 
@@ -53,8 +53,6 @@
             <h:column>
                 <h:form>
                     <h:commandLink action="#{clientController.prepareViewBook(book)}" value="View "/>
-                    <h:commandLink action="#{clientController.prepareEditBook(book)}" value="Edit "/>
-                    <h:commandLink action="#{clientController.doDeleteBook(book)}" value="Delete"/>
                 </h:form>
             </h:column>
             

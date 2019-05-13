@@ -7,6 +7,7 @@ package edu.iit.sat.itmd4515.bgonzalez2.web;
 
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Book;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Retailer;
+import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import edu.iit.sat.itmd4515.bgonzalez2.service.BookService;
 import edu.iit.sat.itmd4515.bgonzalez2.service.RetailerService;
 import java.util.logging.Logger;
@@ -24,7 +25,7 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class RetailerController {
-private static final Logger LOG = Logger.getLogger(ClientController.class.getName());
+private static final Logger LOG = Logger.getLogger(RetailerController.class.getName());
     
     @EJB 
     private RetailerService retailerSvc;
@@ -46,7 +47,7 @@ private static final Logger LOG = Logger.getLogger(ClientController.class.getNam
     
     @PostConstruct
     private void postContsruct(){
-        LOG.info("ClientController is firing postConstruct()");
+        LOG.info("RetailerController is firing postConstruct()");
         retailer = retailerSvc.findByUsername(loginController.getRemoteUser());
         book = new Book();
     }
@@ -59,21 +60,11 @@ private static final Logger LOG = Logger.getLogger(ClientController.class.getNam
      * @return
      */
     public String prepareViewBook(Book b) {
-        LOG.info("Inside prepareViewPet with pet " + b.toString());
+        LOG.info("Inside prepareViewBook with book " + b.toString());
         this.book = b;
         return "/retailer/viewBook.xhtml";
     }
 
-    /**
-     *
-     * @param b
-     * @return
-     */
-    public String prepareEditBook(Book b) {
-        LOG.info("Inside prepareEditBook with book " + b.toString());
-        this.book = b;
-        return "/retailer/editBook.xhtml";
-    }
 
     /**
      *
@@ -107,12 +98,23 @@ private static final Logger LOG = Logger.getLogger(ClientController.class.getNam
             bookSvc.createWithRetailer(book, retailer);
         }
         
-        // option 1 = we could force a refresh of the owner to refresh the collections
-        //client = clientSvc.findByUsername(loginController.getRemoteUser());
-        
-        // option 2 = force a faces-redirect
         return "/retailer/welcome.xhtml?faces-redirect=true";
     }
+    
+    /**
+     *
+     * @param a
+     * @param u
+     * @return
+     */
+    public String updateUser(Retailer a, User u){
+        LOG.info("Inside update User with retailer " + a.toString());
+        LOG.info("Inside update User with username: " + u.toString());
+        retailerSvc.updateRetailerInfo(a, u);
+        
+        return "/admin/welcome.xhtml?faces-redirect=true";
+    }
+
 
     /**
      *

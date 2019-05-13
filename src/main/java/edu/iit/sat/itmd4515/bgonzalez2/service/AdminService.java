@@ -6,6 +6,7 @@
 package edu.iit.sat.itmd4515.bgonzalez2.service;
 
 import edu.iit.sat.itmd4515.bgonzalez2.domain.Administrator;
+import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -27,6 +28,24 @@ public class AdminService extends AbstractService<Administrator> {
      */
     public AdminService() {
         super(Administrator.class);
+    }
+    
+    /**
+     *
+     * @param a
+     * @param u
+     */
+    public void updateAdminInfo(Administrator a, String u){
+        Administrator adminFromDatabase = em.getReference(Administrator.class, a.getId());
+        
+        
+        adminFromDatabase.setName(a.getName());
+        adminFromDatabase.setLastName(a.getLastName());
+        adminFromDatabase.setEmail(a.getEmail());
+        adminFromDatabase.getUser().setUserName(u);
+        
+        em.merge(adminFromDatabase);
+        em.merge(adminFromDatabase.getUser());
     }
     
     /**

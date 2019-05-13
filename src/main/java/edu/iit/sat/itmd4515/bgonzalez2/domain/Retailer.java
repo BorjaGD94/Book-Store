@@ -8,11 +8,13 @@ package edu.iit.sat.itmd4515.bgonzalez2.domain;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -25,6 +27,8 @@ import javax.persistence.OneToOne;
 public class Retailer extends AbstractNamedEntity {
 
     @OneToMany(mappedBy = "retailer")
+    @XmlTransient
+    @JsonbTransient 
     private List<Book> books = new ArrayList<>();
 
     @OneToOne
@@ -92,5 +96,22 @@ public class Retailer extends AbstractNamedEntity {
             // b.getClient().remove(this);
         //}
     }
+
+    /**
+     *
+     * @return
+     */
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    /**
+     *
+     * @param books
+     */
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+    
 
 }

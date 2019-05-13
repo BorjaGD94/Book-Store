@@ -56,6 +56,15 @@ public class BookService extends AbstractService<Book> {
         return em.createNamedQuery("Book.findAll", Book.class).getResultList();
     }
     
+    /**
+     * Find all the books in the database that have no ownwer, and return as a List<Book>
+     * 
+     * @return the complete list of books with no owner in the database 
+     */
+    public List<Book> findAllBooksWithNoOwner() {
+        return em.createNamedQuery("Book.findAllBooksWithNoOwner", Book.class).getResultList();
+    }
+    
 
     /**
      * This service methos accepts a Book POJO representing the input from a user
@@ -129,6 +138,7 @@ public class BookService extends AbstractService<Book> {
         em.merge(c);
     }
     
+    
     /**
      * The createWithRetailer method will create a new book in the database, and
      * associate that book with the retailer that publishes it passed as a parameter.
@@ -148,7 +158,7 @@ public class BookService extends AbstractService<Book> {
         // settting both sides of the relationship now
         r.addBook(b);
         b.setRetailer(r);
-        // merging the client, because this entity is the owning side of the relationship
+        // merging the retailer, because this entity is the owning side of the relationship
         // it controls the database updates and creates the FK
         em.merge(r);
     }

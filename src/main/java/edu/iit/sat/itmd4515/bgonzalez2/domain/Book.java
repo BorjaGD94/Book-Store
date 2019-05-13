@@ -22,6 +22,7 @@ import javax.validation.constraints.PastOrPresent;
 @Entity
 @NamedQuery(name = "Book.findAll", query = "select b from Book b")
 @NamedQuery(name = "Book.findByTitle", query = "select b from Book b where b.title = :title")
+@NamedQuery(name = "Book.findAllBooksWithNoOwner", query = "select b from Book b where b.client is null")
 public class Book extends AbstractIdentifiedEntity{
     
     /**

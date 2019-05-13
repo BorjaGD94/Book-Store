@@ -55,8 +55,12 @@
                                 <ui:fragment rendered="#{loginController.admin}">
                                     <h:commandLink class="dropdown-item" action="#{adminController.prepareCreateUser()}" value="Add New User"/>
                                 </ui:fragment>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <ui:fragment rendered="#{loginController.admin}">
+                                    <h:commandLink class="dropdown-item" action="#{adminController.prepareViewClients()}" value="View all Clients"/>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{loginController.admin}">
+                                    <h:commandLink class="dropdown-item" action="#{adminController.prepareViewRetailers()}" value="View all Retailers"/>
+                                </ui:fragment>
                             </h:form>
                         </div>
                     </li>

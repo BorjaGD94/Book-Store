@@ -12,7 +12,6 @@ import edu.iit.sat.itmd4515.bgonzalez2.domain.Client;
 import edu.iit.sat.itmd4515.bgonzalez2.domain.security.User;
 import edu.iit.sat.itmd4515.bgonzalez2.service.AdminService;
 import edu.iit.sat.itmd4515.bgonzalez2.service.BookService;
-import edu.iit.sat.itmd4515.bgonzalez2.service.GroupService;
 import edu.iit.sat.itmd4515.bgonzalez2.service.UserService;
 import java.util.List;
 import java.util.logging.Logger;
@@ -78,15 +77,16 @@ public class AdminController {
     @PostConstruct
     private void postConstruct(){
         LOG.info("Inside AdminController.postConstruct()");
-        //admin = adminSvc.findByUsername(loginController.getRemoteUser());
+        // Initialize the objects to be used in this controller
         book = new Book();
         user = new User();
         userDetails = new AbstractNamedEntity() {};
+        admin = new Administrator();
     }
     
     /**
      *
-     * @return
+     * @return all the books in the database
      */
     public List<Book> getAllBooks(){
         return bookSvc.findAll();
@@ -94,8 +94,8 @@ public class AdminController {
     
     /**
      *
-     * @param b
-     * @return
+     * @param b contains the book owned by the client who wants to view their books
+     * @return empty for null clients and the name of the client if the client exists
      */
     public String formatClientAsString(Book b){
         Client c = b.getClient();
@@ -111,42 +111,72 @@ public class AdminController {
 
     /**
      *
-     * @param b
-     * @return
+     * @param b contains the book that wants to be viewed
+     * @return string with the path to view a book
      */
     public String prepareViewBook(Book b) {
         LOG.info("Inside prepareViewBook with book " + b.toString());
+        // Set the book to be viewed as the controllers book
         this.book = b;
         return "/admin/viewBook.xhtml";
     }
 
     /**
      *
-     * @param b
-     * @return
+     * @param b contains the books that the admin wants to edit
+     * @return string with the path to edit the book
      */
     public String prepareEditBook(Book b) {
         LOG.info("Inside prepareEditBook with book " + b.toString());
+        // Set the book to be viewed as the controllers book
         this.book = b;
         return "/admin/editBook.xhtml";
     }
 
     /**
      *
-     * @return
+     * @return string with the path to create a book
      */
     public String prepareCreateBook() {
         LOG.info("Inside prepareCreateBook");
+        // The controllers book is created so when the user inputs the book info,
+        // it can be set to this new book object.
         this.book = new Book();
         
         return "/admin/editBook.xhtml";
 
     }
     
+    /**
+     *
+     * @return string with the path to create a user
+     */
     public String prepareCreateUser() {
         LOG.info("Inside prepareCreateUser");
+        // The controllers user is created so when the admin inputs the user info,
+        // it can be set to this new user object.
         this.user = new User();
         return "/admin/addUser.xhtml";
+    }
+    
+    /**
+     *
+     * @return string with the path to view the clients profile information
+     */
+    public String prepareViewClients() {
+        LOG.info("Inside prepareViewClients");
+        this.user = new User();
+        return "/admin/viewClients.xhtml";
+    }
+    
+    /**
+     *
+     * @return string with the path to view all the retailers
+     */
+    public String prepareViewRetailers() {
+        LOG.info("Inside prepareViewClients");
+        this.user = new User();
+        return "/admin/viewRetailers.xhtml";
     }
 
     //
@@ -154,7 +184,7 @@ public class AdminController {
 
     /**
      *
-     * @return
+     * @return string with the path to the admins welcome page
      */
     public String doSaveBook() {
         // when complete, this method will invoke service layer
@@ -163,24 +193,22 @@ public class AdminController {
         
         if(this.book.getId() != null){
             LOG.info("Preparing to call an update in the service layer with " + this.book.toString());
-            //bookSvc.editBookWithNoChangeToClient(book);
+            // call the update function passing the book with the updated information.
             bookSvc.update(book);
         } else {
             LOG.info("Preparing to create in the service layer with " + this.book.toString());
+            // call the function to create a book and set the client for that book.
             bookSvc.createAndAddClient(book);
         }
         
-        // option 1 = we could force a refresh of the owner to refresh the collections
-        //client = clientSvc.findByUsername(loginController.getRemoteUser());
         
-        // option 2 = force a faces-redirect
         return "/admin/welcome.xhtml?faces-redirect=true";
     }
 
     /**
      *
-     * @param b
-     * @return
+     * @param b contains the book to be deleted
+     * @return string with the path the admins welcome page
      */
     public String doDeleteBook(Book b) {
         LOG.info("Inside doDeleteBook with book " + b.toString());
@@ -188,13 +216,31 @@ public class AdminController {
         return "/admin/welcome.xhtml";
     }
     
-    public void addUser() {
+    /**
+     *
+     *
+     * @return string with the path to the admins welcome page
+     */
+    public String addUser() {
         LOG.info("Inside addUser with user " + user.toString());
         LOG.info("UserDet: " + userDetails.toString());
         
         userSvc.createUserWithGroups(user, userDetails);
         
-        //return "/admin/welcome.xhtml?faces-redirect=true";
+        return "/admin/welcome.xhtml?faces-redirect=true";
+    }
+    
+    /**
+     *
+     *
+     * @return string with the path to the admins welcome page
+     */
+    public String updateUser() {
+        LOG.info("Inside update User with admin " + admin.toString());
+        LOG.info("Inside update User with username: " + user.getUserName());
+        adminSvc.updateAdminInfo(admin, user.getUserName());
+        
+        return "/admin/welcome.xhtml?faces-redirect=true";
     }
     
     

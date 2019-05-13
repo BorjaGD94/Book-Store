@@ -7,6 +7,7 @@ package edu.iit.sat.itmd4515.bgonzalez2.domain.security;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -106,7 +107,33 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group{" + "groupName=" + groupName + ", groupDesc=" + groupDesc + ", users=" + users + '}';
+        return "Group{" + "groupName=" + groupName + ", groupDesc=" + groupDesc + '}';
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.groupName);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Group other = (Group) obj;
+        if (!Objects.equals(this.groupName, other.groupName)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

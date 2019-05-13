@@ -96,6 +96,37 @@ public class Client extends AbstractNamedEntity {
     }
     
     /**
+     *
+     * @param p
+     */
+    public void addPurchase(PurchaseHistory p) {
+        if (!this.purchases.contains(p)) {
+            this.purchases.add(p);
+        }
+        /*if (!b.getClient().equals(this)) {
+            // For one to many relationships is this neccessary?
+            b.setClient(this);
+        }*/
+    }
+
+    /**
+     * removeBook is a helper method to manage both sides of this bi-directional
+     * OneToMany relationship
+     *
+     * @param p
+     */
+
+    public void removePurchase(PurchaseHistory p) {
+        if (this.purchases.contains(p)) {
+            this.purchases.remove(p);
+        }
+        //if( b.getClient().equals(this)){
+            // For one to many relationships is this neccessary?
+            // b.getClient().remove(this);
+        //}
+    }
+    
+    /**
      * Get the value of books
      *
      * @return the value of books
@@ -154,5 +185,7 @@ public class Client extends AbstractNamedEntity {
     public void setUser(User user) {
         this.user = user;
     }
+    
+    
         
 }
