@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-My project consists of an Online Bookstore that has three different security roles. These roles can perform different actions and operate with the
+This project consists of an Online Bookstore that has three different security roles. These roles can perform different actions and operate with the
 database in different ways. The entities in my project consist of a Book, PurchaseHistory, Client, Retailer and Administrator as well as entities for
 users and groups. These entities relate to each other in the following ways:
 
@@ -25,4 +25,8 @@ Administrator: The administrator has full functionality, which means he can crea
 book or what retailer published the book to the site. The admin can also add users of any kind (Administrator, Client, Retailer). He can create
 users that may belong to one, two or all three groups/roles. Naturally, administrators can delete users as well. Finally, admins can also update
 their profile information.
+
+## Design 
+
+
 
