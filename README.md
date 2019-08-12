@@ -54,7 +54,7 @@ The first thing to do is to setup your database schema and create the connection
          b. Enter a schema name of itmd4515. Leave the default collation blank. Click apply.   
          c. Click apply on the subsequent confirmation window. This window displays the actual SQL commands used to create the database.  
    2. Create a MySQL user named itmd4515 with full rights to the database(s). The user must have a password of itmd4515. Do not use the         root user for connection pools. This user may already exist from your prior home work. If so, you do not need to re-create.  
-         a. If your Workbench is displaying Schemas, then click on Management to access the management options. 
+         a. If your Workbench is displaying Schemas, then click on Management to access the management options.   
          b. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/2.png" height="380">    
          c. Click on Users and Privileges.  
          d. Click on Add Account.   
@@ -67,7 +67,7 @@ The first thing to do is to setup your database schema and create the connection
          b. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/3.png" height="280">  
          c. Right-click on Databases and choose New Connection.  
          d. Select the MySQL JDBC Driver and click Next.  
-         e. Change the database to itmd4515, enter your credentials, and test the connection.
+         e. Change the database to itmd4515, enter your credentials, and test the connection.  
          f. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/4.png" height="380">    
          g. Click Finish.  
 
