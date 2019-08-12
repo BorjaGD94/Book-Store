@@ -72,3 +72,9 @@ The first thing to do is to setup your database schema and create the connection
     &emsp;f. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/4.png" height="280">    
     &emsp;g. Click Finish.  
 
+Now you will need to install your Netbeans application along side the Glassfish server. To do this go to the following link and download the program:
+
+[Download Netbeans](https://netbeans.org/downloads/8.2/)
+
+You will have to choose the Java EE pack that comes with the Glassfish server already installed. When installing Netbeans choose all the default options. Once everything is done you will need my zip folder called "bgonzalez2-fp.zip". In my case (Mac users) you will have to unzip the file and place it in your NetbeansProjects folder (/Users/Borja/NetBeansProjects/bgonzalez2-fp⁩). Then inside Netbeans you should click on Open Project in the File menu which is situated in the tip left corner of the application. Then you will be inside the NetbeansProjects folder and you just need to select the bgonzalez2-fp folder and click on open project. Clean and Build your project by right clicking on your project folder and clicking on Clean and Buid and after this process is done you can run your project by clicking on the green play button in the top-middle of your application (make sure your project folder is selected).
+
