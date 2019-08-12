@@ -50,6 +50,7 @@ If the login is not successful, the user will be redirected to an error page tha
 The first thing to do is to setup your database schema and create the connection that the application will use. 
 
    1. Create a new MySQL database schema named itmd4515.  
+         a. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/1.png" width="48">
          a. ![](https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/1.png =100x)  
          b. Enter a schema name of itmd4515. Leave the default collation blank. Click apply.   
          c. Click apply on the subsequent confirmation window. This window displays the actual SQL commands used to create the database.  
