@@ -47,14 +47,15 @@ If the login is not successful, the user will be redirected to an error page tha
 
 ## Requirements (Installation, Compile, Runtime, Database, etc)
 
-The first thing to do is to setup your database schema and create the connection that our application will use. 
+The first thing to do is to setup your database schema and create the connection that the application will use. 
 
-...1. Create a new MySQL database schema named itmd4515. 
-.......a. ![Alt text](https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/1.png)
-.......b. Enter a schema name of itmd4515. Leave the default collation blank. Click apply. Click apply on the subsequent confirmation window. This window displays the actual SQL commands used to create the database.
-Create a MySQL user named itmd4515 with full rights to the database(s). The user must have a password of itmd4515. Do not use the root user
-for connection pools. This user may already exist from your prior home work. If so, you do not need to re-create.
-If your Workbench is displaying Schemas, then click on Management to access the management options
+   1. Create a new MySQL database schema named itmd4515.
+         a. ![Alt text](https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/1.png)
+         b. Enter a schema name of itmd4515. Leave the default collation blank. Click apply. 
+         c. Click apply on the subsequent confirmation window. This window displays the actual SQL commands used to create the database.
+   2. Create a MySQL user named itmd4515 with full rights to the database(s). The user must have a password of itmd4515. Do not use the         root user for connection pools. This user may already exist from your prior home work. If so, you do not need to re-create.
+         a. If your Workbench is displaying Schemas, then click on Management to access the management options.
+         b. ![Alt text](https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/2.png)
 Click on Users and Privileges
 Click on Add Account
 Give your new account a Login Name of itmd4515
