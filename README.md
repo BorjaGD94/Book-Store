@@ -54,27 +54,20 @@ The first thing to do is to setup your database schema and create the connection
          b. Enter a schema name of itmd4515. Leave the default collation blank. Click apply.   
          c. Click apply on the subsequent confirmation window. This window displays the actual SQL commands used to create the database.  
    2. Create a MySQL user named itmd4515 with full rights to the database(s). The user must have a password of itmd4515. Do not use the         root user for connection pools. This user may already exist from your prior home work. If so, you do not need to re-create.  
-         a. If your Workbench is displaying Schemas, then click on Management to access the management options.  
-         b. ![Alt text](https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/2.png)
-Click on Users and Privileges
-Click on Add Account
-Give your new account a Login Name of itmd4515
-Limit your new account to Hosts Matching localhost
-Give your new account a password of itmd4515
-Click on Apply to create the account
-Click on Schema Privileges, add your new itmd4515 schema, select "All" privileges, and click apply.
-3.
-a.
-b.
-c.
-d.
-e.
-f.
-g.
-Create a NetBeans database connection to your new MySQL database. This database connection will be by various tools within NetBeans.
-Click on the Services tab
-Right-click on Databases and choose New Connection
-Select the MySQL JDBC Driver and click Next
-Change the database to itmd4515, enter your credentials, and test the connection
-Click Finish
+         a. If your Workbench is displaying Schemas, then click on Management to access the management options. 
+         b. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/2.png" height="380">    
+         c. Click on Users and Privileges.  
+         d. Click on Add Account.   
+             I. Give your new account a Login Name of itmd4515.  
+             II. Limit your new account to Hosts Matching localhost.  
+             III. Give your new account a password of itmd4515.  
+             IV. Click on Apply to create the account.  
+             V. Click on Schema Privileges, add your new itmd4515 schema, select "All" privileges, and click apply.
+   3. Create a NetBeans database connection to your new MySQL database. This database connection will be by various tools within NetBeans.          a. Click on the Services tab.  
+         b. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/3.png" height="280">  
+         c. Right-click on Databases and choose New Connection.  
+         d. Select the MySQL JDBC Driver and click Next.  
+         e. Change the database to itmd4515, enter your credentials, and test the connection.
+         f. <img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/4.png" height="380">    
+         g. Click Finish.  
 
