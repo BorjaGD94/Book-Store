@@ -78,3 +78,63 @@ Now you will need to install your Netbeans application along side the Glassfish 
 
 You will have to choose the Java EE pack that comes with the Glassfish server already installed. When installing Netbeans choose all the default options. Once everything is done you will need my zip folder called "bgonzalez2-fp.zip". In my case (Mac users) you will have to unzip the file and place it in your NetbeansProjects folder (/Users/Borja/NetBeansProjects/bgonzalez2-fp⁩). Then inside Netbeans you should click on Open Project in the File menu which is situated in the tip left corner of the application. Then you will be inside the NetbeansProjects folder and you just need to select the bgonzalez2-fp folder and click on open project. Clean and Build your project by right clicking on your project folder and clicking on Clean and Buid and after this process is done you can run your project by clicking on the green play button in the top-middle of your application (make sure your project folder is selected).
 
+### Tools, Libraries and API's
+
+```xml
+<dependencies>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa</artifactId>
+            <version>2.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.47</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>8.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+ 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArguments>
+                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.6</version>
+            </plugin>
+        </plugins>
+    </build>
+```
