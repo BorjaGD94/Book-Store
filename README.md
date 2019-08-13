@@ -143,5 +143,28 @@ You will have to choose the Java EE pack that comes with the Glassfish server al
 
 ### Administrator Captures
 
-<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/5.png" height="280">
-<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/6.png" height="280">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/6.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/7.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/8.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/9.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/10.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/11.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/12.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/13.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/14.png" height="250">
+
+### Retailer Captures
+
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/15.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/16.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/17.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/18.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/19.png" height="250">
+
+### Client Captures
+
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/20.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/21.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/22.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/23.png" height="250">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/24.png" height="250">
+
+### Login Failed Capture
+
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/25.png" height="250">
+
+### Validation Error Captures
+
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/26.png" height="250"><img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/27.png" height="250">
