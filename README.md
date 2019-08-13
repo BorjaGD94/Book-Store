@@ -138,3 +138,10 @@ You will have to choose the Java EE pack that comes with the Glassfish server al
         </plugins>
     </build>
 ```
+
+## Screen Captures
+
+### Administrator Captures
+
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/5.png" height="280">
+<img src="https://github.com/BorjaGD94/Book-Store/blob/master/screenshots/6.png" height="280">
